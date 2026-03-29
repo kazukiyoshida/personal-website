@@ -1,6 +1,3 @@
-// Blog data for kazuki yoshida's personal engineering blog
-// Design: Terminal Noir — dark terminal aesthetic × Scandinavian minimalism
-
 export interface Post {
   id: string;
   title: string;

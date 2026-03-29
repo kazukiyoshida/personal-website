@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="404 - Page Not Found" currentPath="">
+  <div
+    class="min-h-screen flex items-center justify-center md:ml-[280px]"
+    style="background: oklch(0.09 0.005 240);"
+  >
+    <div class="text-center">
+      <h1
+        class="text-6xl font-bold mb-4"
+        style="font-family: 'JetBrains Mono', monospace; color: oklch(0.73 0.17 65);"
+      >
+        404
+      </h1>
+      <p
+        class="text-sm mb-6"
+        style="font-family: 'JetBrains Mono', monospace; color: oklch(0.55 0.008 240);"
+      >
+        // page not found
+      </p>
+      <a
+        href="/"
+        class="text-xs px-4 py-2 border transition-all duration-200 inline-block"
+        style="font-family: 'JetBrains Mono', monospace; border-color: oklch(0.73 0.17 65); color: oklch(0.73 0.17 65); border-radius: 2px;"
+      >
+        &gt; go home
+      </a>
+    </div>
+  </div>
+</Layout>

@@ -1,15 +1,5 @@
-/* =============================================================
-   COMPONENT: MobileSidebar
-   Design: Terminal Noir — mobile-friendly header with profile info
-   Features: Collapsible navigation, profile summary, SNS links
-   ============================================================= */
-
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
 
-// Social icons as SVG components
 function TwitterIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -34,9 +24,23 @@ function InstagramIcon() {
   );
 }
 
-export default function MobileSidebar() {
+interface MobileSidebarProps {
+  currentPath: string;
+}
+
+export default function MobileSidebar({ currentPath }: MobileSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [location] = useLocation();
+
+  const navItems = [
+    { label: "about", path: "/about" },
+    { label: "blog", path: "/" },
+  ];
+
+  const socialLinks = [
+    { icon: <TwitterIcon />, href: "https://twitter.com/", label: "Twitter" },
+    { icon: <GitHubIcon />, href: "https://github.com/", label: "GitHub" },
+    { icon: <InstagramIcon />, href: "https://instagram.com/", label: "Instagram" },
+  ];
 
   return (
     <>
@@ -50,7 +54,6 @@ export default function MobileSidebar() {
         }}
       >
         <div className="flex items-center justify-between px-4 py-3">
-          {/* Logo/Title */}
           <div>
             <h1
               className="text-lg font-bold leading-tight"
@@ -60,130 +63,109 @@ export default function MobileSidebar() {
                 letterSpacing: "-0.01em",
               }}
             >
-              kazuki
-              <br />
-              yoshida
+              kazuki<br />yoshida
             </h1>
           </div>
 
-          {/* Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="p-2 transition-colors duration-200"
             style={{ color: "oklch(0.73 0.17 65)" }}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
+            {isOpen ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            )}
           </button>
         </div>
 
         {/* Mobile Menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.nav
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="border-t"
-              style={{ borderColor: "oklch(0.20 0.006 240)" }}
-            >
-              <div className="px-4 py-4 space-y-3">
-                {/* Profile Info */}
-                <div className="pb-3" style={{ borderBottom: "1px solid oklch(0.18 0.006 240)" }}>
-                  <p
-                    className="text-xs"
-                    style={{
-                      fontFamily: "'IBM Plex Sans JP', sans-serif",
-                      color: "rgba(200,200,200,0.75)",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    ML Infra Engineer, 東京
-                    <br />
-                    Webエンジニアの記録です。
-                    <br />
-                    <span style={{ color: "rgba(245,166,35,0.8)" }}>
-                      #Rust #Go #Python #Vue #Vim
-                    </span>
-                  </p>
-                </div>
-
-                {/* Navigation Links */}
-                <div className="space-y-2">
-                  {[
-                    { label: "about", path: "/about" },
-                    { label: "blog", path: "/" },
-                  ].map(({ label, path }) => {
-                    const isActive = location === path || (path === "/" && location === "/");
-                    return (
-                      <Link key={label} href={path}>
-                        <span
-                          className="block text-xs px-3 py-2 border transition-all duration-200"
-                          style={{
-                            fontFamily: "'JetBrains Mono', monospace",
-                            borderColor: isActive ? "oklch(0.73 0.17 65)" : "rgba(200,200,200,0.3)",
-                            color: isActive ? "oklch(0.73 0.17 65)" : "rgba(200,200,200,0.7)",
-                            background: isActive ? "rgba(245,166,35,0.08)" : "transparent",
-                            borderRadius: "2px",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {label}
-                        </span>
-                      </Link>
-                    );
-                  })}
-                </div>
-
-                {/* Social Links */}
-                <div className="flex gap-3 pt-2" style={{ borderTop: "1px solid oklch(0.18 0.006 240)" }}>
-                  {[
-                    { icon: <TwitterIcon />, href: "https://twitter.com/", label: "Twitter" },
-                    { icon: <GitHubIcon />, href: "https://github.com/", label: "GitHub" },
-                    { icon: <InstagramIcon />, href: "https://instagram.com/", label: "Instagram" },
-                  ].map(({ icon, href, label }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={label}
-                      className="transition-all duration-200"
-                      style={{ color: "rgba(240,240,240,0.7)" }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = "oklch(0.73 0.17 65)";
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.color = "rgba(240,240,240,0.7)";
-                      }}
-                    >
-                      {icon}
-                    </a>
-                  ))}
-                </div>
-
-                {/* Language toggle */}
-                <button
-                  className="text-xs transition-colors duration-200 w-full text-left"
+        {isOpen && (
+          <nav
+            className="border-t"
+            style={{ borderColor: "oklch(0.20 0.006 240)" }}
+          >
+            <div className="px-4 py-4 space-y-3">
+              {/* Profile Info */}
+              <div className="pb-3" style={{ borderBottom: "1px solid oklch(0.18 0.006 240)" }}>
+                <p
+                  className="text-xs"
                   style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    color: "rgba(200,200,200,0.5)",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.color = "rgba(245,166,35,0.7)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.color = "rgba(200,200,200,0.5)";
+                    fontFamily: "'IBM Plex Sans JP', sans-serif",
+                    color: "rgba(200,200,200,0.75)",
+                    lineHeight: 1.6,
                   }}
                 >
-                  &gt; English
-                </button>
+                  ML Infra Engineer, 東京<br />
+                  Webエンジニアの記録です。<br />
+                  <span style={{ color: "rgba(245,166,35,0.8)" }}>
+                    #Rust #Go #Python #Vue #Vim
+                  </span>
+                </p>
               </div>
-            </motion.nav>
-          )}
-        </AnimatePresence>
+
+              {/* Navigation Links */}
+              <div className="space-y-2">
+                {navItems.map(({ label, path }) => {
+                  const isActive = currentPath === path;
+                  return (
+                    <a
+                      key={label}
+                      href={path}
+                      className="block text-xs px-3 py-2 border transition-all duration-200"
+                      style={{
+                        fontFamily: "'JetBrains Mono', monospace",
+                        borderColor: isActive ? "oklch(0.73 0.17 65)" : "rgba(200,200,200,0.3)",
+                        color: isActive ? "oklch(0.73 0.17 65)" : "rgba(200,200,200,0.7)",
+                        background: isActive ? "rgba(245,166,35,0.08)" : "transparent",
+                        borderRadius: "2px",
+                      }}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {label}
+                    </a>
+                  );
+                })}
+              </div>
+
+              {/* Social Links */}
+              <div className="flex gap-3 pt-2" style={{ borderTop: "1px solid oklch(0.18 0.006 240)" }}>
+                {socialLinks.map(({ icon, href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="social-link"
+                  >
+                    {icon}
+                  </a>
+                ))}
+              </div>
+
+              {/* Language toggle */}
+              <button
+                className="lang-toggle text-xs w-full text-left"
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  color: "rgba(200,200,200,0.5)",
+                }}
+              >
+                &gt; English
+              </button>
+            </div>
+          </nav>
+        )}
       </header>
 
       {/* Spacer for mobile header */}
