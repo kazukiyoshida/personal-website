@@ -52,13 +52,6 @@ draft: false      # optional, hides from listing
 
 When adding a new post, also add its metadata to `src/lib/blog-data.ts`.
 
-## i18n
-
-- 3 languages: ja (default), en, zh
-- UI translations in `src/lib/i18n.ts` (nanostores-based)
-- Blog content: separate markdown files per language
-- Language switching is client-side via localStorage
-
 ## Design System
 
 - Theme: "Terminal Noir" — dark terminal aesthetic with amber accent
