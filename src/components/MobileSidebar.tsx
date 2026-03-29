@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useStore } from "@nanostores/react";
+import { $lang, t } from "../lib/i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 function TwitterIcon() {
   return (
@@ -24,22 +27,24 @@ function InstagramIcon() {
   );
 }
 
+const socialLinks = [
+  { icon: <TwitterIcon />, href: "https://twitter.com/", label: "Twitter" },
+  { icon: <GitHubIcon />, href: "https://github.com/", label: "GitHub" },
+  { icon: <InstagramIcon />, href: "https://instagram.com/", label: "Instagram" },
+];
+
 interface MobileSidebarProps {
   currentPath: string;
 }
 
 export default function MobileSidebar({ currentPath }: MobileSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const lang = useStore($lang);
+  const bio = t("bio", lang);
 
   const navItems = [
-    { label: "about", path: "/about" },
-    { label: "blog", path: "/" },
-  ];
-
-  const socialLinks = [
-    { icon: <TwitterIcon />, href: "https://twitter.com/", label: "Twitter" },
-    { icon: <GitHubIcon />, href: "https://github.com/", label: "GitHub" },
-    { icon: <InstagramIcon />, href: "https://instagram.com/", label: "Instagram" },
+    { label: t("navAbout", lang), path: "/about" },
+    { label: t("navBlog", lang), path: "/" },
   ];
 
   return (
@@ -67,25 +72,28 @@ export default function MobileSidebar({ currentPath }: MobileSidebarProps) {
             </h1>
           </div>
 
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 transition-colors duration-200"
-            style={{ color: "oklch(0.73 0.17 65)" }}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="18" x2="21" y2="18" />
-              </svg>
-            )}
-          </button>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher size="sm" />
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 transition-colors duration-200"
+              style={{ color: "oklch(0.73 0.17 65)" }}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -105,8 +113,13 @@ export default function MobileSidebar({ currentPath }: MobileSidebarProps) {
                     lineHeight: 1.6,
                   }}
                 >
-                  ML Infra Engineer, 東京<br />
-                  Webエンジニアの記録です。<br />
+                  {bio.split("\n").map((line, i) => (
+                    <span key={i}>
+                      {i > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
+                  <br />
                   <span style={{ color: "rgba(245,166,35,0.8)" }}>
                     #Rust #Go #Python #Vue #Vim
                   </span>
@@ -119,7 +132,7 @@ export default function MobileSidebar({ currentPath }: MobileSidebarProps) {
                   const isActive = currentPath === path;
                   return (
                     <a
-                      key={label}
+                      key={path}
                       href={path}
                       className="block text-xs px-3 py-2 border transition-all duration-200"
                       style={{
@@ -152,17 +165,6 @@ export default function MobileSidebar({ currentPath }: MobileSidebarProps) {
                   </a>
                 ))}
               </div>
-
-              {/* Language toggle */}
-              <button
-                className="lang-toggle text-xs w-full text-left"
-                style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  color: "rgba(200,200,200,0.5)",
-                }}
-              >
-                &gt; English
-              </button>
             </div>
           </nav>
         )}

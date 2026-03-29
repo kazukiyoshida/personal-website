@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import Sidebar from "../components/Sidebar.astro";
+import Sidebar from "../components/Sidebar.tsx";
 import MobileSidebar from "../components/MobileSidebar.tsx";
 
 interface Props {
@@ -28,7 +28,7 @@ const { title = "kazuki yoshida", currentPath = "/" } = Astro.props;
   <body class="min-h-screen" style={`background: oklch(0.09 0.005 240);`}>
     <!-- Desktop Sidebar -->
     <div class="hidden md:block">
-      <Sidebar currentPath={currentPath} />
+      <Sidebar currentPath={currentPath} client:load />
     </div>
     <!-- Mobile Header -->
     <MobileSidebar currentPath={currentPath} client:load />

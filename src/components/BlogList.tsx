@@ -1,10 +1,12 @@
 import { useState, useMemo } from "react";
+import { useStore } from "@nanostores/react";
+import { $lang, t } from "../lib/i18n";
 import type { Post } from "../lib/blog-data";
 import { posts } from "../lib/blog-data";
 
 const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort();
 
-function PostItem({ post, index }: { post: Post; index: number }) {
+function PostItem({ post, index, postedAtLabel }: { post: Post; index: number; postedAtLabel: string }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -27,7 +29,7 @@ function PostItem({ post, index }: { post: Post; index: number }) {
             fontSize: "0.7rem",
           }}
         >
-          posted at {post.date}
+          {postedAtLabel} {post.date}
         </time>
 
         <div className="flex items-start gap-1.5 md:gap-2 mb-3">
@@ -69,13 +71,14 @@ function PostItem({ post, index }: { post: Post; index: number }) {
 export default function BlogList() {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const lang = useStore($lang);
 
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
       const matchesTag = activeTag ? post.tags.includes(activeTag) : true;
       const matchesSearch = searchQuery
         ? post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          post.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()))
+          post.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
         : true;
       return matchesTag && matchesSearch;
     });
@@ -100,7 +103,7 @@ export default function BlogList() {
               fontSize: "0.8rem",
             }}
           >
-            ~/blog
+            {t("blogPath", lang)}
           </span>
           <span
             style={{
@@ -109,14 +112,14 @@ export default function BlogList() {
               fontSize: "0.75rem",
             }}
           >
-            {filteredPosts.length} posts
+            {filteredPosts.length} {t("posts", lang)}
           </span>
         </div>
 
         <div className="relative">
           <input
             type="text"
-            placeholder="search..."
+            placeholder={t("search", lang)}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="text-xs px-3 py-1.5 outline-none transition-all duration-200"
@@ -150,7 +153,7 @@ export default function BlogList() {
               background: activeTag === null ? "oklch(0.73 0.17 65 / 0.08)" : undefined,
             }}
           >
-            all
+            {t("all", lang)}
           </button>
           {allTags.map((tag) => (
             <button
@@ -172,7 +175,7 @@ export default function BlogList() {
         <div>
           {filteredPosts.length > 0 ? (
             filteredPosts.map((post, i) => (
-              <PostItem key={post.id} post={post} index={i} />
+              <PostItem key={post.id} post={post} index={i} postedAtLabel={t("postedAt", lang)} />
             ))
           ) : (
             <div
@@ -184,7 +187,7 @@ export default function BlogList() {
               }}
             >
               <span style={{ color: "oklch(0.73 0.17 65)" }}>// </span>
-              no posts found
+              {t("noPostsFound", lang)}
             </div>
           )}
         </div>
@@ -203,7 +206,7 @@ export default function BlogList() {
                 fontSize: "0.7rem",
               }}
             >
-              © 2024 kazuki yoshida
+              {t("copyright", lang)}
             </p>
             <p
               style={{
@@ -212,7 +215,7 @@ export default function BlogList() {
                 fontSize: "0.65rem",
               }}
             >
-              ML Infra Engineer, 東京
+              {t("footerRole", lang)}
             </p>
           </div>
         </footer>
