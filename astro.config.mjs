@@ -7,4 +7,14 @@ export default defineConfig({
     react(),
     tailwind(),
   ],
+  markdown: {
+    shikiConfig: {
+      theme: "github-dark",
+    },
+  },
+  vite: {
+    optimizeDeps: {
+      disabled: true,
+    },
+  },
 });

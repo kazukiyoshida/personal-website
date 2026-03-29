@@ -1,0 +1,80 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import BlogPostHeader from "../../components/BlogPostHeader.tsx";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+
+  // Group posts by slug (from frontmatter)
+  const slugs = [...new Set(allPosts.map((p) => p.data.postSlug))];
+
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+
+const allPosts = await getCollection(
+  "blog",
+  ({ data }) => data.postSlug === slug && !data.draft
+);
+
+// Render each language version
+const rendered: { lang: string; title: string; date: string; tags: string[]; Content: any }[] = [];
+for (const post of allPosts) {
+  const { Content } = await post.render();
+  rendered.push({
+    lang: post.data.lang,
+    title: post.data.title,
+    date: post.data.date,
+    tags: post.data.tags,
+    Content,
+  });
+}
+
+const jaPost = rendered.find((r) => r.lang === "ja") || rendered[0];
+
+// Build postMeta for the React header component
+const postMeta: Record<string, { title: string; date: string; tags: string[] }> = {};
+for (const r of rendered) {
+  postMeta[r.lang] = { title: r.title, date: r.date, tags: r.tags };
+}
+---
+
+<Layout title={`${jaPost.title} | kazuki yoshida`} currentPath={`/blog/${slug}`}>
+  <main class="min-h-screen md:ml-[280px]">
+    <BlogPostHeader client:load postMeta={postMeta} slug={slug} />
+    <article class="px-4 md:px-12 pb-12">
+      {rendered.map((r) => (
+        <div class="blog-content-lang" data-lang={r.lang} style={r.lang !== "ja" ? "display:none" : ""}>
+          <div class="prose">
+            <r.Content />
+          </div>
+        </div>
+      ))}
+    </article>
+  </main>
+</Layout>
+
+<script>
+  function updateContentLang() {
+    const lang = localStorage.getItem("lang") || "ja";
+    document.querySelectorAll(".blog-content-lang").forEach((el) => {
+      const htmlEl = el as HTMLElement;
+      htmlEl.style.display = htmlEl.dataset.lang === lang ? "" : "none";
+    });
+  }
+
+  updateContentLang();
+
+  document.addEventListener("langchange", updateContentLang);
+
+  let lastLang = localStorage.getItem("lang") || "ja";
+  setInterval(() => {
+    const currentLang = localStorage.getItem("lang") || "ja";
+    if (currentLang !== lastLang) {
+      lastLang = currentLang;
+      updateContentLang();
+    }
+  }, 200);
+</script>

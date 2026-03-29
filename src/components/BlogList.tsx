@@ -19,7 +19,7 @@ function PostItem({ post, index, postedAtLabel }: { post: Post; index: number; p
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <a href="#" className="block">
+      <a href={`/blog/${post.id}`} className="block">
         <time
           className="text-xs mb-2 block"
           style={{

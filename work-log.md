@@ -227,10 +227,83 @@ sudo apt-get install -y libglib2.0-0t64 libatk1.0-0t64 libatk-bridge2.0-0t64 \
 
 ---
 
-## 6. 次のステップ
+## 6. ブログ記事の移植（完了）
 
-- [ ] `nuxt-blog` のコンテンツ（Markdown 記事）を `personal-website` に移植
-- [ ] ブログ記事の個別ページ表示機能を実装
-- [ ] Markdown レンダリング対応
+### 6-1. Astro Content Collections の導入
+
+- `src/content/config.ts` でコンテンツコレクションのスキーマを定義
+- スキーマ: `title`, `date`, `tags`, `excerpt`, `draft`, `lang`, `postSlug`
+- Shiki (github-dark テーマ) によるコードブロックのシンタックスハイライトを設定
+
+### 6-2. Markdown 記事の移植
+
+- nuxt-blog の 10 記事を `src/content/blog/{slug}/ja.md` に移植
+- 各記事に frontmatter（title, date, tags, excerpt, lang, postSlug）を付与
+- 画像は `public/images/blog/` にコピーし、Markdown 内のパスを書き換え
+- 英語・中国語のプレースホルダー（en.md, zh.md）を各記事に作成（30ファイル = 10記事 × 3言語）
+- ドラフト記事（monolith-to-microservices）は `draft: true` で除外
+
+### 6-3. ブログ記事詳細ページの実装
+
+- `src/pages/blog/[slug].astro` で動的ルーティング
+- 各言語版の Content を Astro サーバーサイドでレンダリングし、`data-lang` 属性の div に格納
+- クライアントサイド JS で localStorage の `lang` 値に基づいて表示言語を切り替え
+- `BlogPostHeader.tsx` React コンポーネントでタイトル・日付・タグ・パンくずを表示
+- nanostores の言語切り替えに連動（`langchange` カスタムイベント + polling）
+
+### 6-4. Markdown 表示スタイル（Terminal Noir テーマ）
+
+- `global.css` に `.prose` クラスでマークダウン用スタイルを追加
+- h2, h3, h4, p, a, strong, ul, ol, li, blockquote, code, pre, img, hr, table をスタイリング
+- コードブロック: github-dark テーマ + ボーダー付きラウンド角
+- リンク: アンバーカラー + 下線アニメーション
+- 引用: アンバーの左ボーダー + 背景色
+
+### 6-5. BlogList の更新
+
+- `blog-data.ts` の `id` を Content Collections の `postSlug` と一致させた
+- `BlogList.tsx` のリンクを `<a href="/blog/{post.id}">` に変更
+
+### 6-6. Astro 4.x へのダウングレード
+
+- Astro 5.x は Vite 6 + esbuild 0.25+ が必要だが、sandbox の ARM64 環境で SIGILL
+- Astro 4.16.19 + Vite 5.4.21 + esbuild 0.19.12 の組み合わせに変更
+- esbuild は esbuild-wasm で代替（ネイティブバイナリが SIGILL するため）
+
+### 6-7. 動作確認
+
+- PC (1280×800): ブログ一覧、記事詳細ともに正常表示
+- SP (375×812): モバイルヘッダー、記事一覧、記事詳細ともに正常表示
+- Shiki によるコードブロックのシンタックスハイライトが動作
+
+---
+
+## 7. 記事を追加する手順
+
+1. `src/content/blog/{slug}/` ディレクトリを作成
+2. `ja.md` を作成し、以下の frontmatter を書く:
+   ```yaml
+   ---
+   title: "記事タイトル"
+   date: "YYYY-MM-DD"
+   tags: ["Tag1", "Tag2"]
+   excerpt: "記事の概要"
+   lang: "ja"
+   postSlug: "slug-name"
+   ---
+   ```
+3. Markdown 本文を書く
+4. 必要に応じて `en.md`, `zh.md` を作成（翻訳版）
+5. `src/lib/blog-data.ts` の `posts` 配列に新しい記事のメタデータを追加
+6. 画像は `public/images/blog/` に配置
+
+---
+
+## 8. 次のステップ
+
+- [x] `nuxt-blog` のコンテンツ（Markdown 記事）を `personal-website` に移植
+- [x] ブログ記事の個別ページ表示機能を実装
+- [x] Markdown レンダリング対応
 - [ ] 実際の SNS リンクやプロフィール情報の更新
 - [ ] デプロイ設定
+- [ ] blog-data.ts を廃止して Content Collections から一覧データを自動生成する（将来改善）

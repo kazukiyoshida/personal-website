@@ -1,0 +1,284 @@
+---
+title: "Rust のアクターモデルで依存性逆転"
+date: "2021-01-26"
+tags: ["Rust", "Actix", "Actor Model", "Dependency Inversion"]
+excerpt: "ActixのアクターモデルとDIパターンを組み合わせてRustアプリケーションの設計を改善する方法を解説します。"
+lang: "ja"
+postSlug: "actor-model-di"
+---
+
+アクターモデルという並行計算モデルがあります。
+これは Carl E. Hewitt によって1973年に発表された
+[A Universal Modular ACTOR Formalism for Artificial Intelligence](https://www.ijcai.org/Proceedings/73/Papers/027B.pdf)
+という論文で提唱されたモデルで、非同期に並行動作するアクターと呼ばれるオブジェクトが
+メッセージを送受信して計算を行います。
+オブジェクト指向プログラミングでは同期的・逐次的に計算が実行されますが、
+アクターモデルは並行して非同期に処理が行われるのが特徴です。
+
+アクターモデルを活用する場合、スクラッチで実装するのは大変なのでライブラリを利用することになります。
+アクターモデルのライブラリは Java や Scala の [Akka](https://akka.io/) が有名ですが、
+Rust にも [Actix](https://github.com/actix/actix) というクレートがあります。
+Actix は [Actix web](https://github.com/actix/actix-web) という人気の Web Application Framework のベースにもなっていて、
+最近では Rust stable でも動作するようになるなど活発に開発が行われています。
+
+今回は Actix によるアクターモデルの簡単な紹介と、開発をする中で見つけた
+**アクターを抽象に依存させるパターン**について紹介したいと思います
+（ただ単にジェネリクスを導入するだけですが、トレイト境界が少し見慣れない形になったのでまとめます）。
+また、抽象に依存するアクターを用いた実際のアプリケーションの例として、
+ビットコインの自動取引システムの実装をご紹介します。
+
+ソースコードはこちらで公開しています。  
+[kazukiyoshida/actor-polymorphism](https://github.com/kazukiyoshida/actor-polymorphism)
+
+使用言語は Rust 1.51.0 nightly 、動作環境は macOS Catalina 10.15.7 です。  
+
+## 2 つのアクターが結合している系
+
+### Messenger アクター と Receiver アクター
+
+基本的な系として、以下のような 2つのアクターが存在する状態を考えてみます。
+
+- Messenger アクター：手紙 Letter を出す機能を持つ. Receiver アクターのアドレスを知っている.
+- Receiver アクター：手紙 Letter を受け取る.
+
+これを図にすると下のようなイメージになります。
+
+<img src="/images/blog/20210126/actorModel1.png" alt="actorModel1">
+
+これをコードに落とし込んでみます。
+
+### Receiver アクターの実装
+
+まずは Receiver アクターから定義しましょう。Receiver という名前の構造体を定義して、
+これに actix::Actor トレイトを実装することでアクターとして振る舞うようになります。
+アクターは4種類の状態（Started、Running、Stopping、Stopped）を持ち、
+状態遷移に対応してメソッドをコールすることができます。
+今回はアクター起動時に標準出力を残すようにします。
+
+```rust
+// Receiver 構造体を定義する
+struct Receiver;
+
+// Receiver 構造体に actix::Actor トレイトを実装する
+impl Actor for Receiver {
+    type Context = Context<Self>;
+
+    // アクター起動時の処理
+    fn started(&mut self, _: &mut Self::Context) {
+        println!("Receiver : start"); // 標準出力する
+    }
+}
+```
+
+Receiver アクターは手紙 Letter を受け取ることができるようにしたいので、これを実装します。
+まずは手紙 Letter 構造体を定義し、これに actix::Message トレイトを自動実装することで
+アクターモデルのメッセージとして受け渡せるようになります。
+
+```rust
+// 手紙 Letter 構造体を定義する.
+// Message トレイトを自動実装することで、Letter はアクターモデルのメッセージとして振る舞うようになる.
+#[derive(Message)]
+#[rtype(result = "()")]
+struct Letter(String);
+```
+
+手紙 Letter が定義できたので、今度は Receiver がこれを受け取った場合に、その内容を
+出力するようにします。これを定義するには Receiver に `Handler<Letter>` トレイトを実装します。
+
+```rust
+// Receiver に Handler<Letter> を実装する
+impl Handler<Letter> for Receiver {
+    type Result = ();
+
+    // メッセージを受け取ったらその内容を標準出力する
+    fn handle(&mut self, msg: Letter, _: &mut Context<Self>) -> Self::Result {
+        println!("Receiver : got a message! >> {:?}", msg.0); // 受け取ったメッセージの内容を出力する.
+    }
+}
+```
+
+以上で Receiver が完成です。
+
+### Messenger アクターの実装
+
+次に Messenger を定義します。Messenger は Receiver のアドレスを知っている必要があるので、
+構造体の要素として持たせるようにします。また、アクターの起動時に Receiver に
+手紙 Letter を送信することにします。
+
+```rust
+// Messenger 構造体を定義する.
+struct Messenger(Addr<Receiver>);
+
+// Messenger 構造体に Actor トレイトを実装する.
+impl Actor for Messenger {
+    type Context = Context<Self>;
+
+    // アクターが起動した時の振る舞い.
+    fn started(&mut self, _: &mut Self::Context) {
+        println!("Messenger: start");               // 起動時に標準出力する
+        println!("Messenger: send message");
+        self.0.do_send(Letter("Hello!!".to_string())); // Receiver にメッセージを送信する.
+    }
+}
+```
+
+これで Messenger の定義も完了です。
+
+### 実行
+
+上記のコードを以下の通りに実行すると標準出力が出力され、Messenger から Receiver に
+メッセージが送られていることが分かります。
+
+```rust
+fn main() {
+    let mut sys = System::new("sys");
+
+    let addr_receiver = sys.block_on(async { Receiver.start() });
+    let addr_messenger = sys.block_on(async { Messenger(addr_receiver).start() });
+
+    sys.run();
+}
+```
+
+```
+Receiver : start
+Messenger: start
+Messenger: send message
+Receiver : got a message! >> "Hello!!"
+```
+
+## 2つのアクターの依存関係について
+
+今回のコードではアクター同士が明示的に依存関係を持っている形式になっています。
+
+```rust
+struct Receiver;                  // <--┐
+struct Messenger(Addr<Receiver>); //  --┘ Receiver に明示的に依存している
+```
+
+このようにアクター同士が強固に結びつく関係が前提となってしまうと、
+複数のアクターで構成するアプリケーションが全体としても強く結合したものになってしまい、
+再利用性が悪くなります。オブジェクト指向でアプリケーションを組む際は、
+インターフェイスに対して依存するようにし、実装クラスは別で用意するという
+依存性の逆転を使ったパターンが多く使われています。これをアクターモデルでもやりたい
+というのが今回のポイントです。
+
+この状態を図にすると下のようなイメージになります。
+
+<img src="/images/blog/20210126/actorModel2.png" alt="actorModel2">
+
+## アクターを抽象に依存させる
+
+アクターモデルで依存性逆転を定義するには、まずは依存関係を抽象化する必要があります。
+
+```rust
+struct Receiver;
+struct Messenger<T>(Addr<T>);
+```
+
+これで抽象に依存するようになりましたが、抽象にトレイト境界をつける必要があります。
+今回は「アクターであること」「メッセージ Letter を受け取れること」という 2つの条件が必要で、
+これを nightly で使用可能な [trait_alias](https://doc.rust-lang.org/beta/unstable-book/language-features/trait-alias.html) 
+を用いて定義します（使わなくても問題ありません）。
+
+```rust
+// trait alias によってトレイト境界をまとめる
+trait LetterHandler = actix::Actor + Handler<Letter>;
+
+struct Receiver;
+struct Messenger<T: LetterHandler>(Addr<T>);
+```
+
+これでアクター同士の依存関係がなくなり、再利用しやすい形式になりました！
+最後に Messenger 構造体をアクターとして振る舞うように Actor トレイトを実装する必要があります。
+この時、抽象アクターの Context にもトレイト境界を宣言する必要があります。
+少し複雑になりますが、次のような実装になります。
+
+```rust
+// Messenger<T> に Actor を実装します
+impl<T> Actor for Messenger<T>
+where                                  // T にトレイト境界を宣言します
+    T: LetterHandler,                  // ・T は LetterHandler トレイトを実装していないといけない
+    T::Context: ToEnvelope<T, Letter>, // ・T は（上の境界によって）アクターだが、アクターのコンテキストが ToEnvelope を実装している必要がある
+{
+    type Context = Context<Self>;
+
+    // アクター起動時の処理
+    fn started(&mut self, _: &mut Self::Context) {
+        println!("Messenger: start");
+
+        println!("Messenger: send message");
+        self.0.do_send(Letter("Hello!!".to_string()));  // T にメッセージを送る
+    }
+}
+```
+
+## 応用例：ビットコイン自動取引システムのアクターモデルでの実装
+
+今回紹介したアクターモデルの抽象化によって、コードベースが再利用しやすくなる例を紹介します。
+実際に私がアプリケーションを書いているのですが、ビットコインの自動取引システムを題材とします。
+このサンプルでは 3つのアクターが登場します。
+
+#### Bitflyer アクター
+
+Bitflyer 取引所の API サーバーと WebSocket で接続し、リアルタイムの板情報を受信します。
+板のスナップショット情報をもとに、その時点で最も条件の良い指値の値段とサイズ（ここでは、これを Best Bid Offer = BBO とします）を
+取得して別のアクターに配信します。
+
+#### Collector アクター
+
+取引所に接続したアクターから配信されるリアルタイム情報をログに書き出します。
+今回は BBO を受け取るので `Handler<BBO>` を実装している必要があります。
+
+#### Strategy アクター
+
+取引所に接続したアクターから配信されるリアルタイム情報をもとに、それを解析して
+自動取引の戦略アルゴリズムに従って実際に売買を実行します。
+今回は戦略アルゴリズムについては省略します。
+
+さて、自動取引システムを構築する際は、耐障害性やパフォーマンス最適化の観点から
+ (1) データ収集アプリケーション と (2) 戦略実行アプリケーション を別のコンテナとして
+実行したいとします。この時、Bitflyer アクターは両方のアプリケーションで利用できるため、
+今回の抽象に依存するアクターのパターンが使用できます。
+
+<img src="/images/blog/20210126/actorModel3.png" alt="actorModel3">
+
+これをコードで表現すると下のようになります。
+WebSocket 通信の部分などは省略していますので、気になる方は[ソースコード](https://github.com/kazukiyoshida/actor-polymorphism)をご覧下さい。
+
+```rust
+// Bitflyer 取引所と WebSocket で接続しリアルタイムにデータを受信するアクター
+// 受信したデータを解析してサービスアクターT に転送する.
+pub struct Bitflyer<T: BBOHandler> {
+    sender: Sender,          // Bitflyer 取引所サーバーへメッセージを送信する際に使用する
+    service_actor: Addr<T>,  // サービスアクターT のアドレス
+}
+```
+
+```rust
+pub trait BBOHandler = actix::Actor + Handler<UpdateBBO>;
+```
+
+```rust
+pub struct Collector;
+
+impl Actor for Collector { .. }
+impl Handler<UpdateBBO> for Collector { .. } // データの保存など
+```
+
+```rust
+pub struct Strategy;
+
+impl Actor for Strategy { .. }
+impl Handler<UpdateBBO> for Strategy { .. } // 売買の実行など
+```
+
+## 終わりに
+
+今回は Rust のアクターモデル Actix の紹介と、アクターを抽象化する方法、
+そしてビットコイン自動取引システムへの応用について紹介しました。
+
+アクターモデルは通常の Web アプリケーション開発で用いられているレイヤード・アーキテクチャ
+とは少し様子が異なるため、どのような構成にするのが良いのか分からず手探りで開発を始めました。
+まだまだ勉強不足なので、もっと良いアーキテクチャがあるのかもしれませんが、
+これからアクターモデルでアプリケーションを書こうという方の参考に少しでもなれば幸いです。
