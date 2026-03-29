@@ -2,7 +2,7 @@ import { useStore } from "@nanostores/react";
 import { $lang, t } from "../lib/i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const SIDEBAR_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663488484081/9oa9GgjXAD7zGT9rQ3fZPH/sidebar-bg-eUK4qefCC5CpBinLhsaZoR.webp";
+const SIDEBAR_BG = "/images/sidebar-bg.webp";
 
 function TwitterIcon() {
   return (
