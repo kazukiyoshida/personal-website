@@ -3,6 +3,7 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
+  site: 'https://kazukiyoshida.com',
   integrations: [
     react(),
     tailwind(),
@@ -10,11 +11,6 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       theme: "github-dark",
-    },
-  },
-  vite: {
-    optimizeDeps: {
-      disabled: true,
     },
   },
 });
