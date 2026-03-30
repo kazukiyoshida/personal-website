@@ -60,7 +60,7 @@ export default function BlogPostHeader({ postMeta, slug }: Props) {
           className="text-xs mb-3 block"
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            color: "oklch(0.50 0.008 240)",
+            color: "oklch(0.60 0.008 240)",
             letterSpacing: "0.04em",
             fontSize: "0.7rem",
           }}

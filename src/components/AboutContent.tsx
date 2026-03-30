@@ -62,7 +62,7 @@ export default function AboutContent() {
               className="text-sm md:text-base leading-relaxed"
               style={{
                 fontFamily: "'IBM Plex Sans JP', sans-serif",
-                color: "oklch(0.65 0.008 240)",
+                color: "oklch(0.72 0.008 240)",
                 lineHeight: 1.8,
               }}
             >
@@ -102,7 +102,7 @@ export default function AboutContent() {
                   className="text-xs md:text-sm mb-2"
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    color: "oklch(0.50 0.008 240)",
+                    color: "oklch(0.60 0.008 240)",
                     letterSpacing: "0.04em",
                   }}
                 >
@@ -160,7 +160,7 @@ export default function AboutContent() {
                   className="text-xs md:text-sm"
                   style={{
                     fontFamily: "'IBM Plex Sans JP', sans-serif",
-                    color: "oklch(0.65 0.008 240)",
+                    color: "oklch(0.72 0.008 240)",
                     lineHeight: 1.6,
                   }}
                 >
@@ -187,7 +187,7 @@ export default function AboutContent() {
             className="text-sm"
             style={{
               fontFamily: "'IBM Plex Sans JP', sans-serif",
-              color: "oklch(0.55 0.008 240)",
+              color: "oklch(0.72 0.008 240)",
             }}
           >
             {t("contactText", lang)}

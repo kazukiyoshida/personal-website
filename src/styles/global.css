@@ -36,8 +36,8 @@
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
 
-  --border: oklch(0.20 0.006 240);
-  --input: oklch(0.20 0.006 240);
+  --border: oklch(0.2 0.006 240);
+  --input: oklch(0.2 0.006 240);
   --ring: oklch(0.73 0.17 65);
 
   --amber: oklch(0.73 0.17 65);
@@ -67,13 +67,20 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: "JetBrains Mono", monospace;
     font-weight: 700;
     letter-spacing: -0.02em;
   }
 
-  code, pre, .mono {
+  code,
+  pre,
+  .mono {
     font-family: "JetBrains Mono", monospace;
   }
 
@@ -138,7 +145,7 @@
   }
 
   .link-underline::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -2px;
     left: 0;
@@ -172,11 +179,11 @@
 
   /* Social link hover */
   .social-link {
-    color: rgba(240,240,240,0.7);
+    color: rgba(240, 240, 240, 0.7);
     transition: all 0.2s ease;
   }
   .social-link:hover {
-    color: #F5A623;
+    color: #f5a623;
     transform: translateY(-2px);
   }
 
@@ -185,8 +192,8 @@
     transition: all 0.2s ease;
   }
   .nav-btn:not(.nav-active):hover {
-    border-color: rgba(245,166,35,0.6) !important;
-    color: rgba(245,166,35,0.8) !important;
+    border-color: rgba(245, 166, 35, 0.6) !important;
+    color: rgba(245, 166, 35, 0.8) !important;
   }
 
   /* Language toggle hover */
@@ -194,7 +201,7 @@
     transition: color 0.2s ease;
   }
   .lang-toggle:hover {
-    color: rgba(245,166,35,0.7) !important;
+    color: rgba(245, 166, 35, 0.7) !important;
   }
 
   /* ============================
@@ -214,7 +221,7 @@
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     padding-bottom: 0.4rem;
-    border-bottom: 1px solid oklch(0.20 0.006 240);
+    border-bottom: 1px solid oklch(0.2 0.006 240);
   }
 
   .prose h3 {
@@ -253,7 +260,8 @@
     font-weight: 600;
   }
 
-  .prose ul, .prose ol {
+  .prose ul,
+  .prose ol {
     margin-bottom: 1.2rem;
     padding-left: 1.5rem;
   }
@@ -270,7 +278,8 @@
     margin-bottom: 0.35rem;
   }
 
-  .prose li > ul, .prose li > ol {
+  .prose li > ul,
+  .prose li > ol {
     margin-top: 0.35rem;
     margin-bottom: 0;
   }
@@ -301,7 +310,7 @@
     margin: 1.5rem 0;
     padding: 1rem 1.25rem;
     border-radius: 0.35rem;
-    border: 1px solid oklch(0.20 0.006 240);
+    border: 1px solid oklch(0.2 0.006 240);
     overflow-x: auto;
     font-size: 0.85rem;
     line-height: 1.6;
@@ -320,12 +329,12 @@
     height: auto;
     border-radius: 0.35rem;
     margin: 1.5rem 0;
-    border: 1px solid oklch(0.20 0.006 240);
+    border: 1px solid oklch(0.2 0.006 240);
   }
 
   .prose hr {
     border: none;
-    border-top: 1px solid oklch(0.20 0.006 240);
+    border-top: 1px solid oklch(0.2 0.006 240);
     margin: 2rem 0;
   }
 
@@ -336,7 +345,8 @@
     font-size: 0.9rem;
   }
 
-  .prose th, .prose td {
+  .prose th,
+  .prose td {
     border: 1px solid oklch(0.22 0.006 240);
     padding: 0.5rem 0.75rem;
     text-align: left;
@@ -362,8 +372,13 @@
 }
 
 @keyframes terminalBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes slideInLeft {
@@ -389,6 +404,7 @@
 }
 
 .animate-fade-in-up {
+  opacity: 0;
   animation: fadeInUp 0.5s ease forwards;
 }
 
