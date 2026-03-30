@@ -29,29 +29,33 @@ export default function BlogPostHeader({ postMeta, slug }: Props) {
     <>
       {/* Top bar */}
       <div
-        className="sticky top-0 z-20 px-4 md:px-12 py-4 flex items-center"
+        className="sticky top-0 z-20 px-4 md:px-32 py-4 flex items-center"
         style={{
           background: "oklch(0.09 0.005 240 / 0.92)",
           backdropFilter: "blur(12px)",
           borderBottom: "1px solid oklch(0.20 0.006 240)",
         }}
       >
-        <a
-          href="/"
-          className="text-xs transition-colors duration-200 hover:opacity-80"
+        <span
+          className="text-xs"
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            color: "oklch(0.50 0.008 240)",
           }}
         >
-          <span style={{ color: "oklch(0.73 0.17 65)" }}>~/blog</span>
+          <a
+            href="/"
+            className="transition-colors duration-200 hover:opacity-80"
+            style={{ color: "oklch(0.73 0.17 65)" }}
+          >
+            ~/blog
+          </a>
           <span style={{ color: "oklch(0.35 0.006 240)" }}>/</span>
-          <span>{slug}</span>
-        </a>
+          <span style={{ color: "oklch(0.50 0.008 240)" }}>{slug}</span>
+        </span>
       </div>
 
       {/* Post header */}
-      <header className="px-4 md:px-12 pt-8 md:pt-10 pb-6 animate-fade-in-up">
+      <header className="px-4 md:px-32 pt-8 md:pt-10 pb-6 animate-fade-in-up">
         <time
           className="text-xs mb-3 block"
           style={{

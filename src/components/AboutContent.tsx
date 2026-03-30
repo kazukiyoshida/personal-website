@@ -16,7 +16,7 @@ export default function AboutContent() {
     <>
       {/* Top bar - Desktop only */}
       <div
-        className="sticky top-0 z-20 px-12 py-4 items-center hidden md:flex"
+        className="sticky top-0 z-20 px-4 md:px-32 py-4 items-center hidden md:flex"
         style={{
           background: "oklch(0.09 0.005 240 / 0.92)",
           backdropFilter: "blur(12px)",
@@ -34,7 +34,7 @@ export default function AboutContent() {
         </span>
       </div>
 
-      <div className="px-4 md:px-12 py-8 md:py-12 max-w-2xl">
+      <div className="px-4 md:px-32 py-8 md:py-12 max-w-2xl">
         {/* Heading */}
         <div className="mb-12 animate-slide-up">
           <div

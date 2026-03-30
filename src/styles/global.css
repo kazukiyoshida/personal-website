@@ -3,7 +3,7 @@
    Philosophy: Dark terminal aesthetic × Scandinavian minimalism
    Fonts: JetBrains Mono (headings/code) + IBM Plex Sans JP (body)
    Accent: Amber #F5A623 — code highlight inspiration
-   Layout: Fixed left sidebar (280px) + scrollable right content
+   Layout: Fixed left sidebar (responsive, max 416px) + scrollable right content
    ============================================================= */
 
 @tailwind base;
@@ -11,6 +11,7 @@
 @tailwind utilities;
 
 :root {
+  --sidebar-width: 0px;
   --radius: 0.25rem;
 
   /* Terminal Noir Dark Palette */
@@ -41,6 +42,12 @@
 
   --amber: oklch(0.73 0.17 65);
   --amber-dim: oklch(0.55 0.12 65);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --sidebar-width: clamp(280px, 26vw, 416px);
+  }
 }
 
 @layer base {

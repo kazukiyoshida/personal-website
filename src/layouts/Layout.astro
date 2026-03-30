@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from "astro:transitions";
 import "../styles/global.css";
 import Sidebar from "../components/Sidebar.tsx";
 import MobileSidebar from "../components/MobileSidebar.tsx";
@@ -24,14 +25,15 @@ const { title = "kazuki yoshida", currentPath = "/" } = Astro.props;
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <ViewTransitions />
   </head>
   <body class="min-h-screen" style={`background: oklch(0.09 0.005 240);`}>
     <!-- Desktop Sidebar -->
-    <div class="hidden md:block">
-      <Sidebar currentPath={currentPath} client:load />
+    <div class="hidden md:block" transition:persist>
+      <Sidebar currentPath={currentPath} client:load transition:persist />
     </div>
     <!-- Mobile Header -->
-    <MobileSidebar currentPath={currentPath} client:load />
+    <MobileSidebar currentPath={currentPath} client:load transition:persist />
     <!-- Page Content -->
     <slot />
   </body>

@@ -42,9 +42,9 @@ for (const r of rendered) {
 ---
 
 <Layout title={`${jaPost.title} | kazuki yoshida`} currentPath={`/blog/${slug}`}>
-  <main class="min-h-screen md:ml-[280px]">
+  <main class="min-h-screen" style="margin-left: var(--sidebar-width);">
     <BlogPostHeader client:load postMeta={postMeta} slug={slug} />
-    <article class="px-4 md:px-12 pb-12">
+    <article class="px-4 md:px-32 pb-12">
       {rendered.map((r) => (
         <div class="blog-content-lang" data-lang={r.lang} style={r.lang !== "ja" ? "display:none" : ""}>
           <div class="prose">

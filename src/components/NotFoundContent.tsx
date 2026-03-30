@@ -6,8 +6,8 @@ export default function NotFoundContent() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center md:ml-[280px]"
-      style={{ background: "oklch(0.09 0.005 240)" }}
+      className="min-h-screen flex items-center justify-center"
+      style={{ background: "oklch(0.09 0.005 240)", marginLeft: "var(--sidebar-width)" }}
     >
       <div className="text-center">
         <h1

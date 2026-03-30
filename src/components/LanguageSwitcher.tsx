@@ -14,8 +14,8 @@ interface Props {
 export default function LanguageSwitcher({ size = "md" }: Props) {
   const lang = useStore($lang);
 
-  const padding = size === "sm" ? "px-2 py-0.5" : "px-2.5 py-1";
-  const fontSize = size === "sm" ? "text-[0.6rem]" : "text-[0.65rem]";
+  const padding = size === "sm" ? "px-2 py-0.5" : "px-3 py-1.5";
+  const fontSize = size === "sm" ? "text-[0.6rem]" : "text-xs";
 
   return (
     <div

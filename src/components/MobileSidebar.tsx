@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useStore } from "@nanostores/react";
 import { $lang, t } from "../lib/i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -37,10 +37,20 @@ interface MobileSidebarProps {
   currentPath: string;
 }
 
-export default function MobileSidebar({ currentPath }: MobileSidebarProps) {
+export default function MobileSidebar({ currentPath: initialPath }: MobileSidebarProps) {
+  const [currentPath, setCurrentPath] = useState(initialPath);
   const [isOpen, setIsOpen] = useState(false);
   const lang = useStore($lang);
   const bio = t("bio", lang);
+
+  useEffect(() => {
+    const updatePath = () => {
+      setCurrentPath(window.location.pathname);
+      setIsOpen(false);
+    };
+    document.addEventListener("astro:after-swap", updatePath);
+    return () => document.removeEventListener("astro:after-swap", updatePath);
+  }, []);
 
   const navItems = [
     { label: t("navAbout", lang), path: "/about" },
@@ -59,7 +69,7 @@ export default function MobileSidebar({ currentPath }: MobileSidebarProps) {
         }}
       >
         <div className="flex items-center justify-between px-4 py-3">
-          <div>
+          <a href="/" className="block hover:opacity-90 transition-opacity duration-200">
             <h1
               className="text-lg font-bold leading-tight"
               style={{
@@ -70,7 +80,7 @@ export default function MobileSidebar({ currentPath }: MobileSidebarProps) {
             >
               kazuki<br />yoshida
             </h1>
-          </div>
+          </a>
 
           <div className="flex items-center gap-3">
             <LanguageSwitcher size="sm" />
