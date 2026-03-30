@@ -34,39 +34,53 @@ export default function AboutContent() {
         </span>
       </div>
 
-      <div className="px-4 md:px-32 py-8 md:py-12 max-w-2xl">
+      <div className="px-4 md:px-32 py-8 md:py-12 max-w-6xl">
         {/* Heading */}
-        <div className="mb-12 animate-slide-up">
-          <div
-            className="text-xs mb-3"
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              color: "oklch(0.73 0.17 65)",
-              letterSpacing: "0.08em",
-            }}
-          >
-            {t("aboutMe", lang)}
+        <div className="mb-12 animate-slide-up flex flex-col md:flex-row md:items-start md:gap-12">
+          <div className="flex-1">
+            <div
+              className="text-xs mb-3"
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                color: "oklch(0.73 0.17 65)",
+                letterSpacing: "0.08em",
+              }}
+            >
+              {t("aboutMe", lang)}
+            </div>
+            <h1
+              className="text-2xl md:text-4xl font-bold mb-6"
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                color: "oklch(0.91 0.005 240)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              kazuki yoshida
+            </h1>
+            <p
+              className="text-sm md:text-base leading-relaxed"
+              style={{
+                fontFamily: "'IBM Plex Sans JP', sans-serif",
+                color: "oklch(0.65 0.008 240)",
+                lineHeight: 1.8,
+              }}
+            >
+              {t("aboutBio", lang)}
+            </p>
           </div>
-          <h1
-            className="text-2xl md:text-4xl font-bold mb-6"
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              color: "oklch(0.91 0.005 240)",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            kazuki yoshida
-          </h1>
-          <p
-            className="text-sm md:text-base leading-relaxed"
-            style={{
-              fontFamily: "'IBM Plex Sans JP', sans-serif",
-              color: "oklch(0.65 0.008 240)",
-              lineHeight: 1.8,
-            }}
-          >
-            {t("aboutBio", lang)}
-          </p>
+          <div className="mt-8 md:mt-6 shrink-0">
+            <img
+              src="/images/selfie.jpg"
+              alt="kazuki yoshida"
+              className="w-48 md:w-56 rounded aspect-square"
+              style={{
+                border: "1px solid oklch(0.22 0.006 240)",
+                objectFit: "cover",
+                objectPosition: "center 20%",
+              }}
+            />
+          </div>
         </div>
 
         {/* Skills */}
@@ -96,7 +110,9 @@ export default function AboutContent() {
                 </h3>
                 <div className="flex flex-wrap gap-1.5">
                   {group.items.map((item) => (
-                    <span key={item} className="tag-badge">{item}</span>
+                    <span key={item} className="tag-badge">
+                      {item}
+                    </span>
                   ))}
                 </div>
               </div>
