@@ -82,7 +82,7 @@ export default function BlogPostHeader({ postMeta, slug }: Props) {
 
         <div className="flex flex-wrap gap-2 mb-6">
           {meta.tags.map((tag) => (
-            <span key={tag} className="tag-badge">
+            <span key={tag} className="tag-badge pointer-events-none">
               {tag}
             </span>
           ))}

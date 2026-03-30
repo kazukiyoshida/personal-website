@@ -4,7 +4,15 @@ import { $lang, t } from "../lib/i18n";
 import type { Post } from "../lib/blog-data";
 import { posts } from "../lib/blog-data";
 
-function PostItem({ post, index, postedAtLabel }: { post: Post; index: number; postedAtLabel: string }) {
+function PostItem({
+  post,
+  index,
+  postedAtLabel,
+}: {
+  post: Post;
+  index: number;
+  postedAtLabel: string;
+}) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -56,7 +64,7 @@ function PostItem({ post, index, postedAtLabel }: { post: Post; index: number; p
 
         <div className="flex flex-wrap gap-2">
           {post.tags.map((tag) => (
-            <span key={tag} className="tag-badge">
+            <span key={tag} className="tag-badge pointer-events-none">
               {tag}
             </span>
           ))}
@@ -112,10 +120,7 @@ export default function BlogList() {
 
         {/* Footer */}
         <footer className="pt-12 pb-8 animate-fade-in-up" style={{ animationDelay: "0.8s" }}>
-          <div
-            className="mb-6"
-            style={{ borderTop: "1px solid oklch(0.18 0.006 240)" }}
-          />
+          <div className="mb-6" style={{ borderTop: "1px solid oklch(0.18 0.006 240)" }} />
           <div className="flex items-center justify-between">
             <p
               style={{
