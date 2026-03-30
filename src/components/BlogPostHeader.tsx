@@ -87,10 +87,6 @@ export default function BlogPostHeader({ postMeta, slug }: Props) {
             </span>
           ))}
         </div>
-
-        <div
-          style={{ borderBottom: "1px solid oklch(0.20 0.006 240)" }}
-        />
       </header>
     </>
   );

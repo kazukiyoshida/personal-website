@@ -69,7 +69,7 @@ export default function AboutContent() {
               {t("aboutBio", lang)}
             </p>
           </div>
-          <div className="mt-8 md:mt-6 shrink-0">
+          <div className="mt-8 md:mt-6 shrink-0 flex justify-center md:justify-start">
             <img
               src="/images/selfie.jpg"
               alt="kazuki yoshida"
