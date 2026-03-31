@@ -56,25 +56,30 @@ for (const r of rendered) {
   </main>
 </Layout>
 
-<script>
-  function updateContentLang() {
-    const lang = localStorage.getItem("lang") || "ja";
-    document.querySelectorAll(".blog-content-lang").forEach((el) => {
-      const htmlEl = el as HTMLElement;
-      htmlEl.style.display = htmlEl.dataset.lang === lang ? "" : "none";
-    });
-  }
-
-  updateContentLang();
-
-  document.addEventListener("langchange", updateContentLang);
-
-  let lastLang = localStorage.getItem("lang") || "ja";
-  setInterval(() => {
-    const currentLang = localStorage.getItem("lang") || "ja";
-    if (currentLang !== lastLang) {
-      lastLang = currentLang;
-      updateContentLang();
+<script is:inline>
+  (function() {
+    function updateContentLang() {
+      var lang = localStorage.getItem("lang") || "ja";
+      document.querySelectorAll(".blog-content-lang").forEach(function(el) {
+        el.style.display = el.dataset.lang === lang ? "" : "none";
+      });
     }
-  }, 200);
+
+    updateContentLang();
+    document.addEventListener("langchange", updateContentLang);
+
+    var lastLang = localStorage.getItem("lang") || "ja";
+    var interval = setInterval(function() {
+      var currentLang = localStorage.getItem("lang") || "ja";
+      if (currentLang !== lastLang) {
+        lastLang = currentLang;
+        updateContentLang();
+      }
+    }, 200);
+
+    document.addEventListener("astro:before-swap", function() {
+      clearInterval(interval);
+      document.removeEventListener("langchange", updateContentLang);
+    }, { once: true });
+  })();
 </script>

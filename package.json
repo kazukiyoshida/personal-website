@@ -11,7 +11,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,astro}": "bash -c 'tsc --noEmit --skipLibCheck'",
-    "*.{ts,tsx,js,mjs,astro,css}": "prettier --check"
+    "*.{ts,tsx,js,mjs,css}": "prettier --check"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.0",
