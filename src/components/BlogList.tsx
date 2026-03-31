@@ -148,13 +148,14 @@ export default function BlogList() {
       <div className="px-4 md:px-32 py-8 md:py-10">
         {/* Profile intro */}
         <div
-          className="flex items-start gap-5 pb-8 mb-2 animate-fade-in-up"
+          className="flex items-start gap-5 py-8 animate-fade-in-up"
           style={{
+            borderTop: "1px solid oklch(0.20 0.006 240)",
             borderBottom: "1px solid oklch(0.20 0.006 240)",
           }}
         >
           <img
-            src={withBase("/images/selfie.jpg")}
+            src={withBase("/images/selfie-icon.jpg")}
             alt="kazuki yoshida"
             className="w-16 h-16 md:w-20 md:h-20 rounded-full shrink-0"
             style={{
@@ -177,7 +178,7 @@ export default function BlogList() {
               className="text-xs md:text-sm mb-3 leading-relaxed"
               style={{
                 fontFamily: "'IBM Plex Sans JP', sans-serif",
-                color: "oklch(0.58 0.008 240)",
+                color: "oklch(0.88 0.005 240)",
               }}
             >
               {t("bio", lang)}
@@ -191,7 +192,7 @@ export default function BlogList() {
                   rel="noopener noreferrer"
                   aria-label={label}
                   className="transition-opacity duration-200 hover:opacity-70"
-                  style={{ color: "oklch(0.50 0.008 240)" }}
+                  style={{ color: "oklch(0.88 0.005 240)" }}
                 >
                   {icon}
                 </a>
