@@ -1,5 +1,6 @@
 import { useStore } from "@nanostores/react";
 import { $lang, t } from "../lib/i18n";
+import { withBase } from "../lib/path";
 
 interface PostMeta {
   title: string;
@@ -43,7 +44,7 @@ export default function BlogPostHeader({ postMeta, slug }: Props) {
           }}
         >
           <a
-            href="/"
+            href={withBase("/")}
             className="transition-colors duration-200 hover:opacity-80"
             style={{ color: "oklch(0.73 0.17 65)" }}
           >

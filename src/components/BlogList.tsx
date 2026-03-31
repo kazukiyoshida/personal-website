@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useStore } from "@nanostores/react";
 import { $lang, t } from "../lib/i18n";
+import { withBase } from "../lib/path";
 import type { Post } from "../lib/blog-data";
 import { posts } from "../lib/blog-data";
 
@@ -25,7 +26,7 @@ function PostItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <a href={`/blog/${post.id}`} className="block">
+      <a href={withBase(`/blog/${post.id}`)} className="block">
         <time
           className="text-xs mb-2 block"
           style={{

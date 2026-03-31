@@ -1,5 +1,6 @@
 import { useStore } from "@nanostores/react";
 import { $lang, t, getTimelineEvents } from "../lib/i18n";
+import { withBase } from "../lib/path";
 
 const skills = [
   { category: "Languages", items: ["Rust", "Go", "Python", "TypeScript"] },
@@ -71,7 +72,7 @@ export default function AboutContent() {
           </div>
           <div className="mt-8 md:mt-6 shrink-0 flex justify-center md:justify-start">
             <img
-              src="/images/selfie.jpg"
+              src={withBase("/images/selfie.jpg")}
               alt="kazuki yoshida"
               className="w-48 md:w-56 rounded aspect-square"
               style={{
