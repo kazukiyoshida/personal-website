@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useStore } from "@nanostores/react";
-import { $lang, t } from "../lib/i18n";
+import { $lang, t, type Lang } from "../lib/i18n";
 import { withBase } from "../lib/path";
 import type { Post } from "../lib/blog-data";
 import { posts } from "../lib/blog-data";
@@ -43,10 +43,12 @@ function PostItem({
   post,
   index,
   postedAtLabel,
+  lang,
 }: {
   post: Post;
   index: number;
   postedAtLabel: string;
+  lang: Lang;
 }) {
   const [hovered, setHovered] = useState(false);
 
@@ -93,7 +95,7 @@ function PostItem({
               letterSpacing: "-0.01em",
             }}
           >
-            {post.title}
+            {post.title[lang]}
           </h2>
         </div>
 
@@ -204,7 +206,13 @@ export default function BlogList() {
         {/* Post list */}
         <div className="mt-8">
           {posts.map((post, i) => (
-            <PostItem key={post.id} post={post} index={i} postedAtLabel={t("postedAt", lang)} />
+            <PostItem
+              key={post.id}
+              post={post}
+              index={i}
+              postedAtLabel={t("postedAt", lang)}
+              lang={lang}
+            />
           ))}
         </div>
 
