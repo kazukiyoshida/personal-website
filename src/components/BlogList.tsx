@@ -152,8 +152,8 @@ export default function BlogList() {
         <div
           className="flex items-start gap-6 md:gap-8 py-7 md:py-10 animate-fade-in-up"
           style={{
-            borderTop: "2px solid var(--amber)",
-            borderBottom: "2px solid var(--amber)",
+            borderTop: "2px solid var(--content-hero-border)",
+            borderBottom: "2px solid var(--content-hero-border)",
           }}
         >
           <img

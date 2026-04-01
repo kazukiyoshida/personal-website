@@ -56,6 +56,7 @@
   --content-border-subtle: oklch(0.85 0.004 240);
   --content-border-medium: oklch(0.8 0.006 240);
   --content-profile-border: oklch(0.82 0.006 240);
+  --content-hero-border: oklch(0.15 0.005 240);
   --content-social: oklch(0.3 0.005 240);
 
   /* Tag */
@@ -131,6 +132,7 @@
   --content-border-subtle: oklch(0.18 0.006 240);
   --content-border-medium: oklch(0.3 0.01 240);
   --content-profile-border: oklch(0.3 0.01 240);
+  --content-hero-border: oklch(0.73 0.17 65);
   --content-social: oklch(0.88 0.005 240);
 
   /* Tag */
