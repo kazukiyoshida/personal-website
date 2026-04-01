@@ -180,9 +180,9 @@ const translations = {
     zh: "// contact",
   },
   contactText: {
-    ja: "Twitter や GitHub からお気軽にご連絡ください。",
-    en: "Feel free to reach out via Twitter or GitHub.",
-    zh: "欢迎通过Twitter或GitHub与我联系。",
+    ja: "X や GitHub、LinkedIn からお気軽にご連絡ください。",
+    en: "Feel free to reach out via X, GitHub, or LinkedIn.",
+    zh: "欢迎通过X、GitHub或LinkedIn与我联系。",
   },
 
   // 404 page
