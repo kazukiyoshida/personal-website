@@ -44,17 +44,17 @@ personal-website/
 
 ### 技術スタック（コードから判明）
 
-| ライブラリ | 用途 |
-|---|---|
-| React 18 | UI フレームワーク |
-| Vite | ビルドツール |
-| TypeScript | 型安全性 |
-| Tailwind CSS | ユーティリティ CSS |
-| framer-motion | アニメーション |
-| wouter | ルーティング（軽量） |
-| lucide-react | アイコン |
-| sonner | トースト通知 |
-| @radix-ui/react-tooltip | ツールチップ |
+| ライブラリ              | 用途                 |
+| ----------------------- | -------------------- |
+| React 18                | UI フレームワーク    |
+| Vite                    | ビルドツール         |
+| TypeScript              | 型安全性             |
+| Tailwind CSS            | ユーティリティ CSS   |
+| framer-motion           | アニメーション       |
+| wouter                  | ルーティング（軽量） |
+| lucide-react            | アイコン             |
+| sonner                  | トースト通知         |
+| @radix-ui/react-tooltip | ツールチップ         |
 
 ### 作成したファイル
 
@@ -98,6 +98,7 @@ personal-website/
 **原因**: Docker Sandbox が ARM64 (aarch64) Linux 環境で、esbuild の Go バイナリが使用する CPU 命令（crypto/FIPS 関連）がエミュレーション環境でサポートされていない
 
 **試したこと**:
+
 1. `npm install --ignore-scripts` → esbuild バイナリの検証をスキップしてインストール成功
 2. `@esbuild/linux-arm64` パッケージを明示インストール → バイナリ自体が SIGILL
 3. `esbuild-wasm` をインストール → WASM バイナリが壊れていた
@@ -164,6 +165,7 @@ personal-website/
 **原因**: Docker コンテナ内では unprivileged user namespaces が無効化されており、Chromium のサンドボックスが機能しない
 
 **試したこと**:
+
 1. `sysctl -w kernel.apparmor_restrict_unprivileged_userns=0` → 効果なし
 2. SUID sandbox バイナリを設置して `CHROME_DEVEL_SANDBOX` 環境変数を設定 → 効果なし
 
@@ -190,6 +192,7 @@ sudo apt-get install -y libglib2.0-0t64 libatk1.0-0t64 libatk-bridge2.0-0t64 \
 ### 3-7. 外部リソースの読み込みエラー（ファイアウォール制限）
 
 **症状**:
+
 - Google Fonts が読み込めず日本語フォントが適用されない
 - サイドバー背景画像（CloudFront CDN）が読み込めない
 
@@ -208,6 +211,7 @@ sudo apt-get install -y libglib2.0-0t64 libatk1.0-0t64 libatk-bridge2.0-0t64 \
 - モバイル表示：ハンバーガーメニューが動作
 
 残りのコンソールエラー:
+
 - `ERR_CERT_AUTHORITY_INVALID` — Google Fonts（ファイアウォール制限）
 - `ERR_CERT_AUTHORITY_INVALID` — サイドバー背景画像（ファイアウォール制限）
 
@@ -215,15 +219,15 @@ sudo apt-get install -y libglib2.0-0t64 libatk1.0-0t64 libatk-bridge2.0-0t64 \
 
 ## 5. 今後の Docker Sandbox 環境向け Tips まとめ
 
-| 問題 | 回避策 |
-|---|---|
-| esbuild SIGILL | esbuild 0.19.12 以下を `overrides` で固定 |
-| Vite 6 が動かない | Vite 5 にダウングレード |
-| Tailwind CSS v4 が使えない | v3 にダウングレードして CSS 構文を書き換え |
-| Playwright Chrome が見つからない | `npx playwright install chromium` 後にラッパースクリプト作成 |
-| Chrome sandbox エラー | ラッパースクリプトで `--no-sandbox` を付与 |
-| Playwright 用システムライブラリ不足 | `apt-get install` で個別インストール |
-| 外部リソース読み込み不可 | ファイアウォール制限。ローカルアセットに置換するか許容 |
+| 問題                                | 回避策                                                       |
+| ----------------------------------- | ------------------------------------------------------------ |
+| esbuild SIGILL                      | esbuild 0.19.12 以下を `overrides` で固定                    |
+| Vite 6 が動かない                   | Vite 5 にダウングレード                                      |
+| Tailwind CSS v4 が使えない          | v3 にダウングレードして CSS 構文を書き換え                   |
+| Playwright Chrome が見つからない    | `npx playwright install chromium` 後にラッパースクリプト作成 |
+| Chrome sandbox エラー               | ラッパースクリプトで `--no-sandbox` を付与                   |
+| Playwright 用システムライブラリ不足 | `apt-get install` で個別インストール                         |
+| 外部リソース読み込み不可            | ファイアウォール制限。ローカルアセットに置換するか許容       |
 
 ---
 
@@ -307,3 +311,30 @@ sudo apt-get install -y libglib2.0-0t64 libatk1.0-0t64 libatk-bridge2.0-0t64 \
 - [ ] 実際の SNS リンクやプロフィール情報の更新
 - [ ] デプロイ設定
 - [ ] blog-data.ts を廃止して Content Collections から一覧データを自動生成する（将来改善）
+
+---
+
+## 9. 初回アクセス時の言語自動判定
+
+### 背景
+
+初回アクセス時にユーザーの言語を自動判定して JA/EN/ZH を切り替えたい。
+GitHub Pages（静的ホスティング）を維持したいため、サーバーサイドでの IP 判定は不可。
+
+### 検討した方法
+
+| 方法                         | 概要                             | 採否                                 |
+| ---------------------------- | -------------------------------- | ------------------------------------ |
+| クライアント Geo-IP API      | `ipapi.co` 等の外部 API で国判定 | 不採用（API 依存・ラグ・無料枠制限） |
+| Cloudflare / Vercel 等に移行 | `CF-IPCountry` ヘッダ等で判定    | 不採用（ホスティング移行が必要）     |
+| `navigator.language`         | ブラウザの言語設定から判定       | **採用**                             |
+
+### 実装内容（`src/lib/i18n.ts`）
+
+`getInitialLang()` で `localStorage` に保存済みの言語がなければ `navigator.languages` を走査して判定する。
+
+- `ja*` → 日本語
+- `zh*` → 中国語
+- それ以外 → 英語（フォールバック）
+
+100% の精度は不要。ブラウザの言語設定はユーザーの実際の言語環境を反映するため、IP ベースよりも実用的。ユーザーが手動で切り替えれば `localStorage` に保存され、以降はそちらが優先される。

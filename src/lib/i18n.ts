@@ -4,10 +4,21 @@ export type Lang = "ja" | "en" | "zh";
 
 const STORAGE_KEY = "lang";
 
+function detectLangFromBrowser(): Lang {
+  const langs = navigator.languages ?? [navigator.language];
+  for (const lang of langs) {
+    const code = lang.toLowerCase();
+    if (code.startsWith("ja")) return "ja";
+    if (code.startsWith("zh")) return "zh";
+  }
+  return "en";
+}
+
 function getInitialLang(): Lang {
   if (typeof window !== "undefined") {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored === "ja" || stored === "en" || stored === "zh") return stored;
+    return detectLangFromBrowser();
   }
   return "ja";
 }
