@@ -33,3 +33,12 @@ export function setTheme(theme: Theme) {
 export function toggleTheme() {
   setTheme($theme.get() === "dark" ? "light" : "dark");
 }
+
+// Re-sync theme state after Astro View Transitions page swap
+if (typeof window !== "undefined") {
+  document.addEventListener("astro:after-swap", () => {
+    const theme = getInitialTheme();
+    $theme.set(theme);
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  });
+}

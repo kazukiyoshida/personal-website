@@ -25,9 +25,7 @@ const { title = "kazuki yoshida", currentPath = "/" } = Astro.props;
         if (!theme) {
           theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
         }
-        if (theme === "dark") {
-          document.documentElement.classList.add("dark");
-        }
+        document.documentElement.classList.toggle("dark", theme === "dark");
       })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
