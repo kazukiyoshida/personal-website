@@ -26,6 +26,15 @@ const { title = "kazuki yoshida", currentPath = "/" } = Astro.props;
           theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
         }
         document.documentElement.classList.toggle("dark", theme === "dark");
+        // Preload sidebar background image for the active theme
+        var img = theme === "dark"
+          ? "/personal-website/images/sidebar-bg.webp"
+          : "/personal-website/images/sidebar-bg-light-wo-clouds.png";
+        var link = document.createElement("link");
+        link.rel = "preload";
+        link.as = "image";
+        link.href = img;
+        document.head.appendChild(link);
       })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
