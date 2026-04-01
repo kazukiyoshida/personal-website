@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useStore } from "@nanostores/react";
 import { $lang, t } from "../lib/i18n";
 import { $theme } from "../lib/theme";
@@ -50,6 +50,7 @@ export default function Sidebar({ currentPath: initialPath }: SidebarProps) {
   const theme = useStore($theme);
   const isDark = theme === "dark";
   const bio = t("bio", lang);
+  const cloudsDelay = useRef(`${-(Date.now() % 60000)}ms`);
 
   useEffect(() => {
     const updatePath = () => setCurrentPath(window.location.pathname);
@@ -78,7 +79,7 @@ export default function Sidebar({ currentPath: initialPath }: SidebarProps) {
           src={CLOUDS_OVERLAY}
           alt=""
           className="sidebar-clouds-overlay"
-          style={{ animationDelay: `${-(Date.now() % 60000)}ms` }}
+          style={{ animationDelay: cloudsDelay.current }}
         />
       )}
 
