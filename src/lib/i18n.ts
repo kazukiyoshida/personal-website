@@ -104,22 +104,63 @@ const translations = {
   },
   timelineEvents: {
     ja: [
-      { year: "2021", event: "ML Infra Engineer として機械学習基盤の開発に従事" },
-      { year: "2019", event: "個人ブログを Nuxt + Express で開発・公開" },
-      { year: "2018", event: "Mercari Tech Conf 2018 参加" },
-      { year: "2016", event: "TensorFlow を使った機械学習の学習を開始" },
+      { year: "2025", event: "CrestAI を創業、AI システムの開発や開発プロセス改善に取り組む" },
+      {
+        year: "2021",
+        event:
+          "LINE (Machine Learning Infrastructure Team) に入社、機械学習システムの基盤や分散処理基盤を構築",
+      },
+      { year: "2018", event: "チームラボに入社、サーバーサイド・フロントエンドの開発に従事" },
+      {
+        year: "2017",
+        event:
+          "IGPIビジネスアナリティクス&インテリジェンスに入社、企業の戦略立案やデータ分析に基づく施策提案を行う",
+      },
+      {
+        year: "2017",
+        event: "京都大学大学院理学研究科を卒業（神経細胞と画像処理機械学習に関する研究）",
+      },
     ],
     en: [
-      { year: "2021", event: "Working on ML infrastructure as an ML Infra Engineer" },
-      { year: "2019", event: "Built and launched a personal blog with Nuxt + Express" },
-      { year: "2018", event: "Attended Mercari Tech Conf 2018" },
-      { year: "2016", event: "Started learning machine learning with TensorFlow" },
+      {
+        year: "2025",
+        event:
+          "Founded CrestAI, working on AI system development and improving development processes",
+      },
+      {
+        year: "2021",
+        event:
+          "Joined LINE (Machine Learning Infrastructure Team), building ML system infrastructure and distributed processing platforms",
+      },
+      { year: "2018", event: "Joined teamLab, working on server-side and frontend development" },
+      {
+        year: "2017",
+        event:
+          "Joined IGPI Business Analytics & Intelligence, providing strategic planning and data-driven recommendations for enterprises",
+      },
+      {
+        year: "2017",
+        event:
+          "Graduated from Kyoto University Graduate School of Science (research on neural cells and image processing with machine learning)",
+      },
     ],
     zh: [
-      { year: "2021", event: "作为ML Infra Engineer从事机器学习基础设施开发" },
-      { year: "2019", event: "使用Nuxt + Express开发并发布个人博客" },
-      { year: "2018", event: "参加Mercari Tech Conf 2018" },
-      { year: "2016", event: "开始使用TensorFlow学习机器学习" },
+      { year: "2025", event: "创立 CrestAI，从事 AI 系统开发和开发流程改善" },
+      {
+        year: "2021",
+        event:
+          "加入 LINE (Machine Learning Infrastructure Team)，构建机器学习系统基础设施和分布式处理平台",
+      },
+      { year: "2018", event: "加入 teamLab，从事服务端和前端开发" },
+      {
+        year: "2017",
+        event:
+          "加入 IGPI Business Analytics & Intelligence，为企业提供战略规划和基于数据分析的方案建议",
+      },
+      {
+        year: "2017",
+        event: "毕业于京都大学大学院理学研究科（神经细胞与图像处理机器学习相关研究）",
+      },
     ],
   },
   contact: {
