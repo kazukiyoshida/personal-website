@@ -35,6 +35,18 @@ const { title = "kazuki yoshida", currentPath = "/" } = Astro.props;
       rel="stylesheet"
     />
     <ViewTransitions />
+    <script is:inline>
+      // Fix: Astro View Transitions ignores popstate events where
+      // history.state is null (i.e. the initial page load entry).
+      // This breaks the browser's swipe-back gesture on mobile because
+      // the URL updates but the DOM doesn't change.
+      // Force a full page load in that case.
+      window.addEventListener('popstate', function(ev) {
+        if (ev.state === null) {
+          location.reload();
+        }
+      });
+    </script>
   </head>
   <body class="min-h-screen">
     <!-- Desktop Sidebar -->
