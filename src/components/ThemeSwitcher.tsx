@@ -3,21 +3,23 @@ import { $theme, toggleTheme } from "../lib/theme";
 
 interface Props {
   size?: "sm" | "md";
+  variant?: "dark" | "auto";
 }
 
-export default function ThemeSwitcher({ size = "md" }: Props) {
+export default function ThemeSwitcher({ size = "md", variant = "dark" }: Props) {
   const theme = useStore($theme);
   const isDark = theme === "dark";
 
   const iconSize = size === "sm" ? 14 : 18;
   const padding = size === "sm" ? "p-1.5" : "p-2";
+  const iconColor = variant === "dark" || isDark ? "oklch(0.73 0.17 65)" : "oklch(0.45 0.008 240)";
 
   return (
     <button
       onClick={toggleTheme}
       className={`${padding} transition-all duration-200`}
       style={{
-        color: "oklch(0.73 0.17 65)",
+        color: iconColor,
         opacity: 0.8,
       }}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}

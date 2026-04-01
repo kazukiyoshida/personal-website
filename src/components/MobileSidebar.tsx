@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useStore } from "@nanostores/react";
 import { $lang, t } from "../lib/i18n";
+import { $theme } from "../lib/theme";
 import { withBase } from "../lib/path";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -43,6 +44,8 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
   const [currentPath, setCurrentPath] = useState(initialPath);
   const [isOpen, setIsOpen] = useState(false);
   const lang = useStore($lang);
+  const theme = useStore($theme);
+  const isDark = theme === "dark";
   const bio = t("bio", lang);
 
   useEffect(() => {
@@ -65,9 +68,9 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
       <header
         className="fixed top-0 left-0 right-0 z-50 md:hidden"
         style={{
-          background: "oklch(0.09 0.005 240 / 0.95)",
+          background: isDark ? "oklch(0.09 0.005 240 / 0.95)" : "oklch(0.97 0.003 240 / 0.95)",
           backdropFilter: "blur(12px)",
-          borderBottom: "1px solid oklch(0.20 0.006 240)",
+          borderBottom: `1px solid ${isDark ? "oklch(0.20 0.006 240)" : "oklch(0.85 0.004 240)"}`,
         }}
       >
         <div className="flex items-center justify-between px-4 py-3">
@@ -79,7 +82,7 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
               className="text-lg font-bold leading-tight"
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                color: "#F0F0F0",
+                color: isDark ? "#F0F0F0" : "#1a1a1a",
                 letterSpacing: "-0.01em",
               }}
             >
@@ -90,8 +93,8 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
           </a>
 
           <div className="flex items-center gap-2">
-            <ThemeSwitcher size="sm" />
-            <LanguageSwitcher size="sm" />
+            <ThemeSwitcher size="sm" variant={isDark ? "dark" : "auto"} />
+            <LanguageSwitcher size="sm" variant={isDark ? "dark" : "auto"} />
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 transition-colors duration-200"
@@ -134,15 +137,25 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
 
         {/* Mobile Menu */}
         {isOpen && (
-          <nav className="border-t" style={{ borderColor: "oklch(0.20 0.006 240)" }}>
+          <nav
+            className="border-t"
+            style={{
+              borderColor: isDark ? "oklch(0.20 0.006 240)" : "oklch(0.85 0.004 240)",
+            }}
+          >
             <div className="px-4 py-4 space-y-3">
               {/* Profile Info */}
-              <div className="pb-3" style={{ borderBottom: "1px solid oklch(0.18 0.006 240)" }}>
+              <div
+                className="pb-3"
+                style={{
+                  borderBottom: `1px solid ${isDark ? "oklch(0.18 0.006 240)" : "oklch(0.85 0.004 240)"}`,
+                }}
+              >
                 <p
                   className="text-xs"
                   style={{
                     fontFamily: "'IBM Plex Sans JP', sans-serif",
-                    color: "rgba(200,200,200,0.75)",
+                    color: isDark ? "rgba(200,200,200,0.75)" : "rgba(60,60,60,0.85)",
                     lineHeight: 1.6,
                   }}
                 >
@@ -153,7 +166,9 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
                     </span>
                   ))}
                   <br />
-                  <span style={{ color: "rgba(245,166,35,0.8)" }}>#Rust #Go #Python #Vue #Vim</span>
+                  <span style={{ color: isDark ? "rgba(245,166,35,0.8)" : "rgba(180,120,20,0.9)" }}>
+                    #Rust #Go #Python #Vue #Vim
+                  </span>
                 </p>
               </div>
 
@@ -168,9 +183,25 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
                       className="block text-xs px-3 py-2 border transition-all duration-200"
                       style={{
                         fontFamily: "'JetBrains Mono', monospace",
-                        borderColor: isActive ? "oklch(0.73 0.17 65)" : "rgba(200,200,200,0.3)",
-                        color: isActive ? "oklch(0.73 0.17 65)" : "rgba(200,200,200,0.7)",
-                        background: isActive ? "rgba(245,166,35,0.08)" : "transparent",
+                        borderColor: isActive
+                          ? isDark
+                            ? "oklch(0.73 0.17 65)"
+                            : "oklch(0.55 0.17 65)"
+                          : isDark
+                            ? "rgba(200,200,200,0.3)"
+                            : "rgba(60,60,60,0.3)",
+                        color: isActive
+                          ? isDark
+                            ? "oklch(0.73 0.17 65)"
+                            : "oklch(0.55 0.17 65)"
+                          : isDark
+                            ? "rgba(200,200,200,0.7)"
+                            : "rgba(60,60,60,0.7)",
+                        background: isActive
+                          ? isDark
+                            ? "rgba(245,166,35,0.08)"
+                            : "rgba(180,120,20,0.08)"
+                          : "transparent",
                         borderRadius: "2px",
                       }}
                       onClick={() => setIsOpen(false)}
@@ -184,7 +215,9 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
               {/* Social Links */}
               <div
                 className="flex gap-3 pt-2"
-                style={{ borderTop: "1px solid oklch(0.18 0.006 240)" }}
+                style={{
+                  borderTop: `1px solid ${isDark ? "oklch(0.18 0.006 240)" : "oklch(0.85 0.004 240)"}`,
+                }}
               >
                 {socialLinks.map(({ icon, href, label }) => (
                   <a
@@ -193,7 +226,8 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="social-link"
+                    className="transition-all duration-200"
+                    style={{ color: isDark ? "rgba(240,240,240,0.7)" : "rgba(60,60,60,0.7)" }}
                   >
                     {icon}
                   </a>
