@@ -32,9 +32,9 @@ export default function BlogPostHeader({ postMeta, slug }: Props) {
       <div
         className="sticky top-0 z-20 px-4 md:px-32 py-4 flex items-center"
         style={{
-          background: "oklch(0.09 0.005 240 / 0.92)",
+          background: "var(--content-bg-overlay)",
           backdropFilter: "blur(12px)",
-          borderBottom: "1px solid oklch(0.20 0.006 240)",
+          borderBottom: "1px solid var(--content-border)",
         }}
       >
         <span
@@ -46,12 +46,12 @@ export default function BlogPostHeader({ postMeta, slug }: Props) {
           <a
             href={withBase("/")}
             className="transition-colors duration-200 hover:opacity-80"
-            style={{ color: "oklch(0.73 0.17 65)" }}
+            style={{ color: "var(--amber)" }}
           >
             ~/blog
           </a>
-          <span style={{ color: "oklch(0.35 0.006 240)" }}>/</span>
-          <span style={{ color: "oklch(0.50 0.008 240)" }}>{slug}</span>
+          <span style={{ color: "var(--content-text-faint)" }}>/</span>
+          <span style={{ color: "var(--content-text-muted)" }}>{slug}</span>
         </span>
       </div>
 
@@ -61,7 +61,7 @@ export default function BlogPostHeader({ postMeta, slug }: Props) {
           className="text-xs mb-3 block"
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            color: "oklch(0.60 0.008 240)",
+            color: "var(--content-text-muted)",
             letterSpacing: "0.04em",
             fontSize: "0.7rem",
           }}
@@ -73,7 +73,7 @@ export default function BlogPostHeader({ postMeta, slug }: Props) {
           className="text-xl md:text-2xl font-bold mb-5"
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            color: "oklch(0.92 0.005 240)",
+            color: "var(--content-heading)",
             lineHeight: 1.4,
             letterSpacing: "-0.02em",
           }}

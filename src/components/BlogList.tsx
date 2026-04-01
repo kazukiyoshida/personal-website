@@ -56,7 +56,7 @@ function PostItem({
     <article
       className="py-7 border-b animate-fade-in-up"
       style={{
-        borderColor: "oklch(0.20 0.006 240)",
+        borderColor: "var(--content-border)",
         animationDelay: `${index * 0.06}s`,
       }}
       onMouseEnter={() => setHovered(true)}
@@ -67,7 +67,7 @@ function PostItem({
           className="text-xs mb-2 block"
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            color: "oklch(0.60 0.008 240)",
+            color: "var(--content-text-muted)",
             letterSpacing: "0.04em",
             fontSize: "0.7rem",
           }}
@@ -80,7 +80,7 @@ function PostItem({
             className="text-xs mt-1 shrink-0 transition-opacity duration-200"
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              color: "oklch(0.73 0.17 65)",
+              color: "var(--amber)",
               opacity: hovered ? 1 : 0,
             }}
           >
@@ -90,7 +90,7 @@ function PostItem({
             className="text-base md:text-[1.15rem] font-semibold transition-colors duration-200"
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              color: hovered ? "oklch(0.73 0.17 65)" : "oklch(0.88 0.005 240)",
+              color: hovered ? "var(--amber)" : "var(--content-heading-sub)",
               lineHeight: 1.45,
               letterSpacing: "-0.01em",
             }}
@@ -120,16 +120,16 @@ export default function BlogList() {
       <div
         className="sticky top-0 z-20 px-4 md:px-32 py-4 items-center hidden md:flex"
         style={{
-          background: "oklch(0.09 0.005 240 / 0.92)",
+          background: "var(--content-bg-overlay)",
           backdropFilter: "blur(12px)",
-          borderBottom: "1px solid oklch(0.20 0.006 240)",
+          borderBottom: "1px solid var(--content-border)",
         }}
       >
         <div className="flex items-center gap-3">
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              color: "oklch(0.73 0.17 65)",
+              color: "var(--amber)",
               fontSize: "0.8rem",
             }}
           >
@@ -138,7 +138,7 @@ export default function BlogList() {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              color: "oklch(0.40 0.006 240)",
+              color: "var(--content-text-faint)",
               fontSize: "0.75rem",
             }}
           >
@@ -152,8 +152,8 @@ export default function BlogList() {
         <div
           className="flex items-start gap-6 md:gap-8 py-7 md:py-10 animate-fade-in-up"
           style={{
-            borderTop: "2px solid oklch(0.73 0.17 65)",
-            borderBottom: "2px solid oklch(0.73 0.17 65)",
+            borderTop: "2px solid var(--amber)",
+            borderBottom: "2px solid var(--amber)",
           }}
         >
           <img
@@ -161,7 +161,7 @@ export default function BlogList() {
             alt="kazuki yoshida"
             className="w-20 h-20 md:w-28 md:h-28 rounded-full shrink-0"
             style={{
-              border: "2px solid oklch(0.30 0.01 240)",
+              border: "2px solid var(--content-profile-border)",
               objectFit: "cover",
               objectPosition: "center 20%",
             }}
@@ -171,7 +171,7 @@ export default function BlogList() {
               className="text-lg md:text-2xl font-bold mb-2 md:mb-3"
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                color: "oklch(0.90 0.005 240)",
+                color: "var(--content-heading)",
               }}
             >
               Hi, I'm Kazuki — I build tools, systems, and ideas.
@@ -180,7 +180,7 @@ export default function BlogList() {
               className="text-sm md:text-base mb-4 leading-relaxed"
               style={{
                 fontFamily: "'IBM Plex Sans JP', sans-serif",
-                color: "oklch(0.88 0.005 240)",
+                color: "var(--content-text)",
               }}
             >
               {t("bio", lang)}
@@ -194,7 +194,7 @@ export default function BlogList() {
                   rel="noopener noreferrer"
                   aria-label={label}
                   className="transition-opacity duration-200 hover:opacity-70"
-                  style={{ color: "oklch(0.88 0.005 240)" }}
+                  style={{ color: "var(--content-social)" }}
                 >
                   {icon}
                 </a>
@@ -218,12 +218,12 @@ export default function BlogList() {
 
         {/* Footer */}
         <footer className="pt-12 pb-8 animate-fade-in-up" style={{ animationDelay: "0.8s" }}>
-          <div className="mb-6" style={{ borderTop: "1px solid oklch(0.18 0.006 240)" }} />
+          <div className="mb-6" style={{ borderTop: "1px solid var(--content-border-subtle)" }} />
           <div className="flex items-center justify-between">
             <p
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                color: "oklch(0.32 0.006 240)",
+                color: "var(--content-text-xfaint)",
                 fontSize: "0.7rem",
               }}
             >
@@ -232,7 +232,7 @@ export default function BlogList() {
             <p
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                color: "oklch(0.28 0.006 240)",
+                color: "var(--content-text-xfaint)",
                 fontSize: "0.65rem",
               }}
             >

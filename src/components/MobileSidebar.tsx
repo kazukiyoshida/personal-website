@@ -3,6 +3,7 @@ import { useStore } from "@nanostores/react";
 import { $lang, t } from "../lib/i18n";
 import { withBase } from "../lib/path";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 function TwitterIcon() {
   return (
@@ -88,7 +89,8 @@ export default function MobileSidebar({ currentPath: initialPath }: MobileSideba
             </h1>
           </a>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <ThemeSwitcher size="sm" />
             <LanguageSwitcher size="sm" />
             <button
               onClick={() => setIsOpen(!isOpen)}

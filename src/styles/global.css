@@ -10,17 +10,91 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light mode (default) */
 :root {
   --sidebar-width: 0px;
   --radius: 0.25rem;
 
-  /* Terminal Noir Dark Palette */
+  --background: oklch(0.97 0.003 240);
+  --foreground: oklch(0.15 0.005 240);
+  --card: oklch(0.98 0.003 240);
+  --card-foreground: oklch(0.15 0.005 240);
+
+  --primary: oklch(0.55 0.17 65);
+  --primary-foreground: oklch(0.98 0.005 240);
+
+  --secondary: oklch(0.93 0.004 240);
+  --secondary-foreground: oklch(0.35 0.005 240);
+
+  --muted: oklch(0.94 0.004 240);
+  --muted-foreground: oklch(0.45 0.008 240);
+
+  --accent: oklch(0.55 0.17 65);
+  --accent-foreground: oklch(0.98 0.005 240);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+
+  --border: oklch(0.88 0.004 240);
+  --input: oklch(0.88 0.004 240);
+  --ring: oklch(0.55 0.17 65);
+
+  --amber: oklch(0.55 0.17 65);
+  --amber-dim: oklch(0.45 0.12 65);
+
+  /* Semantic content colors */
+  --content-bg: oklch(0.97 0.003 240);
+  --content-bg-overlay: oklch(0.97 0.003 240 / 0.92);
+  --content-heading: oklch(0.15 0.005 240);
+  --content-heading-sub: oklch(0.2 0.005 240);
+  --content-text: oklch(0.3 0.005 240);
+  --content-text-secondary: oklch(0.38 0.008 240);
+  --content-text-muted: oklch(0.5 0.008 240);
+  --content-text-faint: oklch(0.6 0.006 240);
+  --content-text-xfaint: oklch(0.68 0.006 240);
+  --content-border: oklch(0.88 0.004 240);
+  --content-border-subtle: oklch(0.85 0.004 240);
+  --content-border-medium: oklch(0.8 0.006 240);
+  --content-profile-border: oklch(0.82 0.006 240);
+  --content-social: oklch(0.3 0.005 240);
+
+  /* Tag */
+  --tag-border: oklch(0.82 0.006 240);
+  --tag-text: oklch(0.42 0.008 240);
+
+  /* Code */
+  --code-bg: oklch(0.94 0.004 240);
+  --code-border: oklch(0.85 0.004 240);
+
+  /* Blockquote */
+  --blockquote-bg: oklch(0.95 0.003 240);
+  --blockquote-text: oklch(0.42 0.008 240);
+
+  /* Table */
+  --table-header-bg: oklch(0.93 0.004 240);
+  --table-header-text: oklch(0.2 0.005 240);
+  --table-border: oklch(0.85 0.004 240);
+
+  /* Scrollbar */
+  --scrollbar-track: oklch(0.95 0.003 240);
+  --scrollbar-thumb: oklch(0.82 0.006 240);
+
+  /* Prose */
+  --prose-body: oklch(0.3 0.005 240);
+  --prose-heading: oklch(0.12 0.005 240);
+  --prose-heading-sub: oklch(0.18 0.005 240);
+  --prose-heading-minor: oklch(0.22 0.005 240);
+  --prose-strong: oklch(0.12 0.005 240);
+  --prose-border: oklch(0.88 0.004 240);
+}
+
+/* Dark mode */
+.dark {
   --background: oklch(0.09 0.005 240);
   --foreground: oklch(0.91 0.005 240);
   --card: oklch(0.12 0.006 240);
   --card-foreground: oklch(0.91 0.005 240);
 
-  /* Amber accent — code highlight */
   --primary: oklch(0.73 0.17 65);
   --primary-foreground: oklch(0.09 0.005 240);
 
@@ -42,6 +116,51 @@
 
   --amber: oklch(0.73 0.17 65);
   --amber-dim: oklch(0.55 0.12 65);
+
+  /* Semantic content colors */
+  --content-bg: oklch(0.09 0.005 240);
+  --content-bg-overlay: oklch(0.09 0.005 240 / 0.92);
+  --content-heading: oklch(0.92 0.005 240);
+  --content-heading-sub: oklch(0.88 0.005 240);
+  --content-text: oklch(0.82 0.005 240);
+  --content-text-secondary: oklch(0.72 0.008 240);
+  --content-text-muted: oklch(0.6 0.008 240);
+  --content-text-faint: oklch(0.4 0.006 240);
+  --content-text-xfaint: oklch(0.32 0.006 240);
+  --content-border: oklch(0.2 0.006 240);
+  --content-border-subtle: oklch(0.18 0.006 240);
+  --content-border-medium: oklch(0.3 0.01 240);
+  --content-profile-border: oklch(0.3 0.01 240);
+  --content-social: oklch(0.88 0.005 240);
+
+  /* Tag */
+  --tag-border: oklch(0.28 0.008 240);
+  --tag-text: oklch(0.65 0.008 240);
+
+  /* Code */
+  --code-bg: oklch(0.15 0.006 240);
+  --code-border: oklch(0.22 0.006 240);
+
+  /* Blockquote */
+  --blockquote-bg: oklch(0.12 0.006 240);
+  --blockquote-text: oklch(0.65 0.008 240);
+
+  /* Table */
+  --table-header-bg: oklch(0.14 0.006 240);
+  --table-header-text: oklch(0.88 0.005 240);
+  --table-border: oklch(0.22 0.006 240);
+
+  /* Scrollbar */
+  --scrollbar-track: oklch(0.09 0.005 240);
+  --scrollbar-thumb: oklch(0.25 0.006 240);
+
+  /* Prose */
+  --prose-body: oklch(0.82 0.005 240);
+  --prose-heading: oklch(0.92 0.005 240);
+  --prose-heading-sub: oklch(0.88 0.005 240);
+  --prose-heading-minor: oklch(0.85 0.005 240);
+  --prose-strong: oklch(0.92 0.005 240);
+  --prose-border: oklch(0.2 0.006 240);
 }
 
 @media (min-width: 768px) {
@@ -125,17 +244,17 @@
     font-weight: 500;
     letter-spacing: 0.02em;
     padding: 0.15rem 0.5rem;
-    border: 1px solid oklch(0.28 0.008 240);
+    border: 1px solid var(--tag-border);
     border-radius: 0.15rem;
-    color: oklch(0.65 0.008 240);
+    color: var(--tag-text);
     background: transparent;
     transition: all 0.2s ease;
     display: inline-block;
   }
 
   .tag-badge:hover {
-    border-color: oklch(0.73 0.17 65);
-    color: oklch(0.73 0.17 65);
+    border-color: var(--amber);
+    color: var(--amber);
   }
 
   /* Amber underline link animation */
@@ -151,7 +270,7 @@
     left: 0;
     width: 0;
     height: 1px;
-    background: oklch(0.73 0.17 65);
+    background: var(--amber);
     transition: width 0.3s ease;
   }
 
@@ -165,16 +284,16 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: oklch(0.09 0.005 240);
+    background: var(--scrollbar-track);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: oklch(0.25 0.006 240);
+    background: var(--scrollbar-thumb);
     border-radius: 2px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: oklch(0.73 0.17 65);
+    background: var(--amber);
   }
 
   /* Social link hover */
@@ -208,7 +327,7 @@
      Prose — Markdown content
      ============================ */
   .prose {
-    color: oklch(0.82 0.005 240);
+    color: var(--prose-body);
     font-size: 0.95rem;
     line-height: 1.85;
     max-width: 48rem;
@@ -217,17 +336,17 @@
   .prose h2 {
     font-size: 1.3rem;
     font-weight: 700;
-    color: oklch(0.92 0.005 240);
+    color: var(--prose-heading);
     margin-top: 2.5rem;
     margin-bottom: 1rem;
     padding-bottom: 0.4rem;
-    border-bottom: 1px solid oklch(0.2 0.006 240);
+    border-bottom: 1px solid var(--prose-border);
   }
 
   .prose h3 {
     font-size: 1.1rem;
     font-weight: 600;
-    color: oklch(0.88 0.005 240);
+    color: var(--prose-heading-sub);
     margin-top: 2rem;
     margin-bottom: 0.75rem;
   }
@@ -235,7 +354,7 @@
   .prose h4 {
     font-size: 1rem;
     font-weight: 600;
-    color: oklch(0.85 0.005 240);
+    color: var(--prose-heading-minor);
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
   }
@@ -245,18 +364,18 @@
   }
 
   .prose a {
-    color: oklch(0.73 0.17 65);
+    color: var(--amber);
     text-decoration: none;
-    border-bottom: 1px solid oklch(0.73 0.17 65 / 0.3);
+    border-bottom: 1px solid var(--amber-dim);
     transition: border-color 0.2s ease;
   }
 
   .prose a:hover {
-    border-bottom-color: oklch(0.73 0.17 65);
+    border-bottom-color: var(--amber);
   }
 
   .prose strong {
-    color: oklch(0.92 0.005 240);
+    color: var(--prose-strong);
     font-weight: 600;
   }
 
@@ -285,11 +404,11 @@
   }
 
   .prose blockquote {
-    border-left: 3px solid oklch(0.73 0.17 65 / 0.5);
+    border-left: 3px solid var(--amber-dim);
     padding: 0.5rem 1rem;
     margin: 1.5rem 0;
-    color: oklch(0.65 0.008 240);
-    background: oklch(0.12 0.006 240);
+    color: var(--blockquote-text);
+    background: var(--blockquote-bg);
     border-radius: 0 0.25rem 0.25rem 0;
   }
 
@@ -300,17 +419,17 @@
   .prose code:not(pre code) {
     font-size: 0.85em;
     padding: 0.15em 0.35em;
-    background: oklch(0.15 0.006 240);
-    border: 1px solid oklch(0.22 0.006 240);
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
     border-radius: 0.2rem;
-    color: oklch(0.73 0.17 65);
+    color: var(--amber);
   }
 
   .prose pre {
     margin: 1.5rem 0;
     padding: 1rem 1.25rem;
     border-radius: 0.35rem;
-    border: 1px solid oklch(0.2 0.006 240);
+    border: 1px solid var(--prose-border);
     overflow-x: auto;
     font-size: 0.85rem;
     line-height: 1.6;
@@ -329,12 +448,12 @@
     height: auto;
     border-radius: 0.35rem;
     margin: 1.5rem 0;
-    border: 1px solid oklch(0.2 0.006 240);
+    border: 1px solid var(--prose-border);
   }
 
   .prose hr {
     border: none;
-    border-top: 1px solid oklch(0.2 0.006 240);
+    border-top: 1px solid var(--prose-border);
     margin: 2rem 0;
   }
 
@@ -347,14 +466,14 @@
 
   .prose th,
   .prose td {
-    border: 1px solid oklch(0.22 0.006 240);
+    border: 1px solid var(--table-border);
     padding: 0.5rem 0.75rem;
     text-align: left;
   }
 
   .prose th {
-    background: oklch(0.14 0.006 240);
-    color: oklch(0.88 0.005 240);
+    background: var(--table-header-bg);
+    color: var(--table-header-text);
     font-weight: 600;
   }
 }

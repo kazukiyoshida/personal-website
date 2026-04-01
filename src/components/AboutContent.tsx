@@ -19,15 +19,15 @@ export default function AboutContent() {
       <div
         className="sticky top-0 z-20 px-4 md:px-32 py-4 items-center hidden md:flex"
         style={{
-          background: "oklch(0.09 0.005 240 / 0.92)",
+          background: "var(--content-bg-overlay)",
           backdropFilter: "blur(12px)",
-          borderBottom: "1px solid oklch(0.20 0.006 240)",
+          borderBottom: "1px solid var(--content-border)",
         }}
       >
         <span
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            color: "oklch(0.73 0.17 65)",
+            color: "var(--amber)",
             fontSize: "0.8rem",
           }}
         >
@@ -43,7 +43,7 @@ export default function AboutContent() {
               className="text-xs mb-3"
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                color: "oklch(0.73 0.17 65)",
+                color: "var(--amber)",
                 letterSpacing: "0.08em",
               }}
             >
@@ -53,7 +53,7 @@ export default function AboutContent() {
               className="text-2xl md:text-4xl font-bold mb-6"
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                color: "oklch(0.91 0.005 240)",
+                color: "var(--content-heading)",
                 letterSpacing: "-0.02em",
               }}
             >
@@ -63,7 +63,7 @@ export default function AboutContent() {
               className="text-sm md:text-base leading-relaxed"
               style={{
                 fontFamily: "'IBM Plex Sans JP', sans-serif",
-                color: "oklch(0.72 0.008 240)",
+                color: "var(--content-text-secondary)",
                 lineHeight: 1.8,
               }}
             >
@@ -76,7 +76,7 @@ export default function AboutContent() {
               alt="kazuki yoshida"
               className="w-48 md:w-56 rounded aspect-square"
               style={{
-                border: "1px solid oklch(0.22 0.006 240)",
+                border: "1px solid var(--content-border)",
                 objectFit: "cover",
                 objectPosition: "center 20%",
               }}
@@ -90,7 +90,7 @@ export default function AboutContent() {
             className="text-xs mb-5"
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              color: "oklch(0.73 0.17 65)",
+              color: "var(--amber)",
               letterSpacing: "0.08em",
             }}
           >
@@ -103,7 +103,7 @@ export default function AboutContent() {
                   className="text-xs md:text-sm mb-2"
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    color: "oklch(0.60 0.008 240)",
+                    color: "var(--content-text-muted)",
                     letterSpacing: "0.04em",
                   }}
                 >
@@ -127,7 +127,7 @@ export default function AboutContent() {
             className="text-xs mb-5"
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              color: "oklch(0.73 0.17 65)",
+              color: "var(--amber)",
               letterSpacing: "0.08em",
             }}
           >
@@ -147,7 +147,7 @@ export default function AboutContent() {
                   className="text-xs shrink-0 pt-0.5"
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    color: "oklch(0.73 0.17 65)",
+                    color: "var(--amber)",
                     minWidth: "2.5rem",
                   }}
                 >
@@ -155,13 +155,13 @@ export default function AboutContent() {
                 </span>
                 <div
                   className="w-px self-stretch mt-1.5 shrink-0"
-                  style={{ background: "oklch(0.22 0.006 240)" }}
+                  style={{ background: "var(--content-border)" }}
                 />
                 <p
                   className="text-xs md:text-sm"
                   style={{
                     fontFamily: "'IBM Plex Sans JP', sans-serif",
-                    color: "oklch(0.72 0.008 240)",
+                    color: "var(--content-text-secondary)",
                     lineHeight: 1.6,
                   }}
                 >
@@ -178,7 +178,7 @@ export default function AboutContent() {
             className="text-xs mb-4"
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              color: "oklch(0.73 0.17 65)",
+              color: "var(--amber)",
               letterSpacing: "0.08em",
             }}
           >
@@ -188,7 +188,7 @@ export default function AboutContent() {
             className="text-sm"
             style={{
               fontFamily: "'IBM Plex Sans JP', sans-serif",
-              color: "oklch(0.72 0.008 240)",
+              color: "var(--content-text-secondary)",
             }}
           >
             {t("contactText", lang)}

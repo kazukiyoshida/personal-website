@@ -3,6 +3,7 @@ import { useStore } from "@nanostores/react";
 import { $lang, t } from "../lib/i18n";
 import { withBase } from "../lib/path";
 import LanguageSwitcher from "./LanguageSwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const SIDEBAR_BG = withBase("/images/sidebar-bg.webp");
 
@@ -154,8 +155,11 @@ export default function Sidebar({ currentPath: initialPath }: SidebarProps) {
           })}
         </nav>
 
-        {/* Language Switcher */}
-        <LanguageSwitcher />
+        {/* Language Switcher & Theme Switcher */}
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <ThemeSwitcher />
+        </div>
       </div>
     </aside>
   );
