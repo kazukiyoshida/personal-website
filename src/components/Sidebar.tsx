@@ -7,7 +7,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const SIDEBAR_BG_DARK = withBase("/images/sidebar-bg.webp");
-const SIDEBAR_BG_LIGHT = withBase("/images/sidebar-right.png");
+const SIDEBAR_BG_LIGHT = withBase("/images/sidebar-bg-right.png");
 
 function TwitterIcon() {
   return (
