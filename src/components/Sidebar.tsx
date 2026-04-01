@@ -71,16 +71,15 @@ export default function Sidebar({ currentPath: initialPath }: SidebarProps) {
         backgroundPosition: isDark ? "center top" : "center 30%",
       }}
     >
-      {/* Overlay gradient (dark mode only) */}
-      {isDark && (
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.92) 75%, rgba(10,10,10,0.98) 100%)",
-          }}
-        />
-      )}
+      {/* Overlay gradient */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: isDark
+            ? "linear-gradient(to bottom, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.92) 75%, rgba(10,10,10,0.98) 100%)"
+            : "linear-gradient(to bottom, rgba(10,10,10,0.0) 0%, rgba(10,10,10,0.2) 45%, rgba(10,10,10,0.65) 75%, rgba(10,10,10,0.85) 100%)",
+        }}
+      />
 
       {/* Content */}
       <div className="relative z-10 px-12 pb-12 pt-8">
