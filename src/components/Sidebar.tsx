@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useStore } from "@nanostores/react";
 import { $lang, t } from "../lib/i18n";
+import { $theme } from "../lib/theme";
 import { withBase } from "../lib/path";
 import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
 
-const SIDEBAR_BG = withBase("/images/sidebar-bg.webp");
+const SIDEBAR_BG_DARK = withBase("/images/sidebar-bg.webp");
+const SIDEBAR_BG_LIGHT = withBase("/images/sidebar-right.png");
 
 function TwitterIcon() {
   return (
@@ -44,6 +46,8 @@ interface SidebarProps {
 export default function Sidebar({ currentPath: initialPath }: SidebarProps) {
   const [currentPath, setCurrentPath] = useState(initialPath);
   const lang = useStore($lang);
+  const theme = useStore($theme);
+  const isDark = theme === "dark";
   const bio = t("bio", lang);
 
   useEffect(() => {
@@ -62,17 +66,18 @@ export default function Sidebar({ currentPath: initialPath }: SidebarProps) {
       className="fixed left-0 top-0 h-screen flex flex-col justify-end overflow-hidden z-10"
       style={{
         width: "var(--sidebar-width)",
-        backgroundImage: `url(${SIDEBAR_BG})`,
+        backgroundImage: `url(${isDark ? SIDEBAR_BG_DARK : SIDEBAR_BG_LIGHT})`,
         backgroundSize: "cover",
-        backgroundPosition: "center top",
+        backgroundPosition: isDark ? "center top" : "center 30%",
       }}
     >
-      {/* Dark overlay gradient */}
+      {/* Overlay gradient */}
       <div
         className="absolute inset-0"
         style={{
-          background:
-            "linear-gradient(to bottom, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.92) 75%, rgba(10,10,10,0.98) 100%)",
+          background: isDark
+            ? "linear-gradient(to bottom, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.92) 75%, rgba(10,10,10,0.98) 100%)"
+            : "linear-gradient(to bottom, rgba(10,10,10,0.05) 0%, rgba(10,10,10,0.35) 45%, rgba(10,10,10,0.82) 75%, rgba(10,10,10,0.95) 100%)",
         }}
       />
 
