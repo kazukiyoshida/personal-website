@@ -556,3 +556,50 @@
   opacity: 0;
   animation: slideInUp 0.5s ease 0.5s forwards;
 }
+
+/* Sidebar animated overlays */
+.sidebar-clouds-overlay {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  width: 200%;
+  max-width: none;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+  animation: clouds-drift 60s linear infinite;
+}
+
+.sidebar-moon-overlay {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  width: 160px;
+  height: 160px;
+  max-width: none;
+  object-fit: contain;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 1;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6))
+    drop-shadow(0 0 50px rgba(255, 255, 255, 0.3));
+  animation: moon-drift 5s linear infinite;
+}
+
+@keyframes clouds-drift {
+  0% {
+    transform: translate(-100%, 60px);
+  }
+  100% {
+    transform: translate(50%, -60px);
+  }
+}
+
+@keyframes moon-drift {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(calc(var(--sidebar-width) + 100%));
+  }
+}

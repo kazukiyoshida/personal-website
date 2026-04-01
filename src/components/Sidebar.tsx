@@ -7,7 +7,8 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const SIDEBAR_BG_DARK = withBase("/images/sidebar-bg.webp");
-const SIDEBAR_BG_LIGHT = withBase("/images/sidebar-bg-right.png");
+const SIDEBAR_BG_LIGHT = withBase("/images/sidebar-bg-right-wo-clouds.png");
+const CLOUDS_OVERLAY = withBase("/images/clouds-overlay.png");
 
 function TwitterIcon() {
   return (
@@ -71,6 +72,16 @@ export default function Sidebar({ currentPath: initialPath }: SidebarProps) {
         backgroundPosition: isDark ? "center top" : "center 30%",
       }}
     >
+      {/* Animated cloud overlay for light mode */}
+      {!isDark && (
+        <img
+          src={CLOUDS_OVERLAY}
+          alt=""
+          className="sidebar-clouds-overlay"
+          style={{ animationDelay: `${-(Date.now() % 60000)}ms` }}
+        />
+      )}
+
       {/* Overlay gradient */}
       <div
         className="absolute inset-0"
