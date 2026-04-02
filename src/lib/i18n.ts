@@ -35,9 +35,9 @@ export function setLang(lang: Lang) {
 const translations = {
   // Sidebar / MobileSidebar
   bio: {
-    ja: "ML Infra Engineer, 東京\nWebエンジニアの記録です。",
-    en: "ML Infra Engineer, Tokyo\nA web engineer's notes.",
-    zh: "ML Infra Engineer, 东京\n一位Web工程师的记录。",
+    ja: "CrestAI 代表\nML Infra Engineer, 東京",
+    en: "CEO at CrestAI\nML Infra Engineer, Tokyo",
+    zh: "CrestAI 代表\nML Infra Engineer, 东京",
   },
   navAbout: {
     ja: "about",
@@ -87,9 +87,9 @@ const translations = {
     zh: "© 2024 kazuki yoshida",
   },
   footerRole: {
-    ja: "ML Infra Engineer, 東京",
-    en: "ML Infra Engineer, Tokyo",
-    zh: "ML Infra Engineer, 东京",
+    ja: "CrestAI 代表 / ML Infra Engineer, 東京",
+    en: "CEO at CrestAI / ML Infra Engineer, Tokyo",
+    zh: "CrestAI 代表 / ML Infra Engineer, 东京",
   },
 
   // About page
@@ -98,10 +98,15 @@ const translations = {
     en: "// about me",
     zh: "// about me",
   },
+  aboutRole: {
+    ja: "CrestAI 代表 / ML Infra Engineer",
+    en: "CEO at CrestAI / ML Infra Engineer",
+    zh: "CrestAI 代表 / ML Infra Engineer",
+  },
   aboutBio: {
-    ja: "東京を拠点に活動するML Infra Engineerです。機械学習基盤の設計・開発を専門とし、RustやGoを使ったシステムプログラミングにも取り組んでいます。このブログでは、日々の技術的な学びや発見を記録しています。",
-    en: "I'm an ML Infra Engineer based in Tokyo, specializing in designing and building machine learning infrastructure. I also work on systems programming with Rust and Go. This blog is where I document my technical learnings and discoveries.",
-    zh: "我是一名驻东京的ML Infra Engineer，专注于机器学习基础设施的设计与开发，同时也从事Rust和Go的系统编程。在这个博客中，我记录着日常的技术学习与发现。",
+    ja: "CrestAI 代表。東京を拠点に活動するML Infra Engineerです。機械学習基盤の設計・開発を専門とし、RustやGoを使ったシステムプログラミングにも取り組んでいます。このブログでは、日々の技術的な学びや発見を記録しています。",
+    en: "CEO at CrestAI. I'm an ML Infra Engineer based in Tokyo, specializing in designing and building machine learning infrastructure. I also work on systems programming with Rust and Go. This blog is where I document my technical learnings and discoveries.",
+    zh: "CrestAI 代表。我是一名驻东京的ML Infra Engineer，专注于机器学习基础设施的设计与开发，同时也从事Rust和Go的系统编程。在这个博客中，我记录着日常的技术学习与发现。",
   },
   skills: {
     ja: "// skills",

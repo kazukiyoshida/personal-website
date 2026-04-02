@@ -90,6 +90,15 @@ export default function AboutContent() {
               kazuki yoshida
             </h1>
             <p
+              className="text-sm md:text-base mb-4"
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                color: "var(--content-text-muted)",
+              }}
+            >
+              {t("aboutRole", lang)}
+            </p>
+            <p
               className="text-sm md:text-base leading-relaxed"
               style={{
                 fontFamily: "'IBM Plex Sans JP', sans-serif",
